@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: idc-provider2
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+server:
+  port: 2002
+
+feign:
+  client:
+    config:
+      remote-service:           #服务名，填写default为所有服务
+        connectTimeout: 1000
+        readTimeout: 3000
