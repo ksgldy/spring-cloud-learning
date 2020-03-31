@@ -41,8 +41,6 @@ public class LogFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
-        log.info("test=======");
-
         ServerHttpRequest request = exchange.getRequest();
         // 请求路径
         String path = request.getPath().pathWithinApplication().value();
