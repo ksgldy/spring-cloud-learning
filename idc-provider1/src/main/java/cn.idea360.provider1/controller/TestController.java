@@ -21,7 +21,7 @@ public class TestController {
     }
 
     @PostMapping("/provider1")
-    public Object postTest(@RequestBody Map<String, String> params) {
+    public Object postTest(@RequestBody Map<String, String> params, @RequestParam(required = false) String username) {
         System.out.println(params);
         return env.getProperty("local.server.port");
     }

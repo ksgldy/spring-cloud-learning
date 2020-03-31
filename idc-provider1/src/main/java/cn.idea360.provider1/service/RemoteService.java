@@ -13,5 +13,4 @@ public interface RemoteService {
     @GetMapping("/provider2")
     Object getProvider2();
 
-
 }
