@@ -1,8 +1,7 @@
 package cn.idea360.gateway.filter5;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
@@ -29,10 +28,11 @@ import java.util.List;
 
 // AdaptCachedBodyGlobalFilter
 
+@Slf4j
 @Component
 public class LogFilter implements GlobalFilter, Ordered {
 
-    private Logger log = LoggerFactory.getLogger(LogFilter.class);
+//    private Logger log = LoggerFactory.getLogger(LogFilter.class);
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String START_TIME = "startTime";
@@ -40,6 +40,8 @@ public class LogFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
+        log.info("test=======");
 
         ServerHttpRequest request = exchange.getRequest();
         // 请求路径
