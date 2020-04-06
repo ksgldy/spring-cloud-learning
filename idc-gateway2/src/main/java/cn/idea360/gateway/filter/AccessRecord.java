@@ -1,4 +1,4 @@
-package cn.idea360.gateway.filter5;
+package cn.idea360.gateway.filter;
 
 import lombok.Data;
 import org.springframework.http.HttpHeaders;

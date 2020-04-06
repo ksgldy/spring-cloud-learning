@@ -1,6 +1,5 @@
-package cn.idea360.gateway.filter5;
+package cn.idea360.gateway.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -26,21 +25,16 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.List;
 
-// AdaptCachedBodyGlobalFilter
-
 @Slf4j
 @Component
 public class LogFilter implements GlobalFilter, Ordered {
 
-//    private Logger log = LoggerFactory.getLogger(LogFilter.class);
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String START_TIME = "startTime";
     private static final List<HttpMessageReader<?>> messageReaders = HandlerStrategies.withDefaults().messageReaders();
 
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
         ServerHttpRequest request = exchange.getRequest();
         // 请求路径
         String path = request.getPath().pathWithinApplication().value();
@@ -59,8 +53,6 @@ public class LogFilter implements GlobalFilter, Ordered {
 
 
         MultiValueMap<String, String> formData = null;
-
-
 
         AccessRecord accessRecord = new AccessRecord();
         accessRecord.setPath(path);
@@ -83,23 +75,22 @@ public class LogFilter implements GlobalFilter, Ordered {
                 voidMono = readBody(exchange, chain, accessRecord);
             }
 
-            if (headers.getContentType().equals(MediaType.APPLICATION_FORM_URLENCODED)) {
-                // 表单
-                voidMono = readFormData(exchange, chain, accessRecord);
-            }
-
             if (voidMono != null) {
                 return voidMono;
             }
 
         }
 
-        return chain.filter(exchange);
+        return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+            log.info("AFilter后置逻辑");
+        }));
     }
 
-    private Mono<Void> readFormData(ServerWebExchange exchange, GatewayFilterChain chain, AccessRecord accessRecord) {
-        return null;
+    @Override
+    public int getOrder() {
+        return Ordered.LOWEST_PRECEDENCE;
     }
+
 
     private Mono<Void> readBody(ServerWebExchange exchange, GatewayFilterChain chain, AccessRecord accessRecord) {
 
@@ -132,11 +123,6 @@ public class LogFilter implements GlobalFilter, Ordered {
                         writeAccessRecord(accessRecord);
                     }).then(chain.filter(mutatedExchange));
         });
-    }
-
-    @Override
-    public int getOrder() {
-        return Ordered.LOWEST_PRECEDENCE;
     }
 
     /**

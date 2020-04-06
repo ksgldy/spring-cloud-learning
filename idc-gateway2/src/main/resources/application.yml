@@ -2,7 +2,7 @@ server:
   port: 2000
 spring:
   application:
-    name: idc-gateway
+    name: idc-gateway2
   redis:
     host: localhost
     port: 6379
@@ -22,9 +22,10 @@ spring:
         locator:
           enabled: true # gateway可以通过开启以下配置来打开根据服务的serviceId来匹配路由,默认是大写
       routes:
-        - id: provider1  # 路由 ID，保持唯一
-          uri: lb://idc-provider1 # uri指目标服务地址，lb代表从注册中心获取服务
-          predicates: # 路由条件。Predicate 接受一个输入参数，返回一个布尔值结果。该接口包含多种默认方法来将 Predicate 组合成其他复杂的逻辑（比如：与，或，非）
+        - id: provider1
+          uri: lb://idc-provider1
+          predicates:
             - Path=/p/**
+          #            - RemoteAddr=192.168.124.5/16
           filters:
-            - StripPrefix=1 # 过滤器StripPrefix，作用是去掉请求路径的最前面n个部分截取掉。StripPrefix=1就代表截取路径的个数为1，比如前端过来请求/test/good/1/view，匹配成功后，路由到后端的请求路径就会变成http://localhost:8888/good/1/view
+            - StripPrefix=1
