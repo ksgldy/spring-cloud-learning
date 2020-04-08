@@ -21,9 +21,47 @@
             ( #{companyId}, #{groupName}, #{rank}, #{createTime}, #{updateTime}, #{creater}, #{updater})
     </insert>
 
+    <update id="updateIgnoreNullById">
+        UPDATE ai_project_group
+        <set>
+            <if test="aiProjectGroup.groupName != null">
+                group_name = #{aiProjectGroup.groupName}
+            </if>
+            <if test="aiProjectGroup.updateTime != null">
+                update_time = #{aiProjectGroup.updateTime}
+            </if>
+            <if test="aiProjectGroup.updater != null">
+                updater = #{aiProjectGroup.updater}
+            </if>
+        </set>
+        where id = #{aiProjectGroup.id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from ai_project_group where id = #{id}
+    </delete>
+
     <select id="selectById" resultMap="BaseResultMap">
         select * from ai_project_group where id = #{id}
     </select>
-    <select id="page" resultType="cn.idea360.oracle.model.AiProjectGroup"></select>
+
+    <select id="page" resultType="cn.idea360.oracle.model.AiProjectGroup">
+        SELECT
+            T2.*
+        FROM
+            ( SELECT T1.*, ROWNUM RN FROM ( SELECT ai.* FROM AI_PROJECT_GROUP ai
+              <where>
+                  1=1
+                  <if test="pageDTO.keyword != null">
+                      AND ai.group_name LIKE '%' ||  #{pageDTO.keyword} || '%'
+                  </if>
+              </where>
+              ) T1 ) T2
+        WHERE
+            RN BETWEEN #{pageDTO.beginResult}
+                AND #{pageDTO.endResult}
+        ORDER BY
+            RANK
+    </select>
 
 </mapper>

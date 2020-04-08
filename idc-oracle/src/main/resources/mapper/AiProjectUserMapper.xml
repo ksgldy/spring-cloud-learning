@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.idea360.oracle.dao.AiProjectUserMapper">
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into ai_project_user (company_id, group_id, customer_id)
+        <foreach collection="aiProjectUserList" item="item"  index="index" separator="UNION ALL">
+            select
+            #{item.companyId}, #{item.groupId}, #{item.customerId}
+            from dual
+        </foreach>
+    </insert>
+
+    <delete id="deleteByMap">
+        delete from ai_project_user
+        <where>
+            <if test="cm.groupId != null">
+                AND group_id = #{cm.groupId}
+            </if>
+        </where>
+    </delete>
+
+
+</mapper>
