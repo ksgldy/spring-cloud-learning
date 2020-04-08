@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @SpringBootTest
 class AiProjectUserMapperTest {
@@ -36,5 +34,13 @@ class AiProjectUserMapperTest {
         Map<String, Object> map = new HashMap<>();
         map.put("groupId", 36L);
         aiProjectUserMapper.deleteByMap(map);
+    }
+
+    @Test
+    public void listByCustomerIds() throws Exception {
+        String[] ids = {"1"};
+        List<String> cids = Arrays.asList(ids);
+        List<AiProjectUser> aiProjectUsers = aiProjectUserMapper.listByCustomerIds(cids);
+        System.out.println(aiProjectUsers.size());
     }
 }

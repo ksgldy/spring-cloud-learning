@@ -12,4 +12,6 @@ public interface AiProjectUserMapper {
 
     int deleteByMap(@Param("cm") Map<String, Object> columnMap) throws Exception;
 
+    List<AiProjectUser> listByCustomerIds(@Param("cids") List<String> customerIds) throws Exception;
+
 }
