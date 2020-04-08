@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.idea360.oracle.dao.AiRuleMapper">
+
+    <insert id="insert" parameterType="cn.idea360.oracle.model.AiRule" useGeneratedKeys="true">
+        insert into ai_rule (company_id, group_id, rule_name, state, condition, action, rank, create_time, update_time, creater, updater)
+        values
+            (#{companyId}, #{groupId}, #{ruleName}, #{state}, #{condition}, #{action}, #{rank}, #{createTime}, #{updateTime}, #{creater}, #{updater})
+    </insert>
+
+    <update id="updateIgnoreNullById">
+      update ai_rule
+      <set>
+          <if test="aiRule.ruleName != null">
+              rule_name = #{aiRule.ruleName}
+          </if>
+      </set>
+    </update>
+
+</mapper>
