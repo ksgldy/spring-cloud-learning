@@ -24,5 +24,6 @@
     <select id="selectById" resultMap="BaseResultMap">
         select * from ai_project_group where id = #{id}
     </select>
+    <select id="page" resultType="cn.idea360.oracle.model.AiProjectGroup"></select>
 
 </mapper>
