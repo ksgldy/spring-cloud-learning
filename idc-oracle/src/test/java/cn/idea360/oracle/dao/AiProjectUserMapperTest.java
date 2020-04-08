@@ -49,4 +49,11 @@ class AiProjectUserMapperTest {
         List<AiProjectUser> aiProjectUsers = aiProjectUserMapper.listByGroupId(36L);
         System.out.println(aiProjectUsers.size());
     }
+
+    @Test
+    public void listByGroupIds() throws Exception {
+        Long[] gids = {36L};
+        List<AiProjectUser> aiProjectUsers = aiProjectUserMapper.listByGroupIds(Arrays.asList(gids));
+        System.out.println(aiProjectUsers.size());
+    }
 }

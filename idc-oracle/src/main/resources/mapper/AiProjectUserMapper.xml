@@ -48,6 +48,20 @@
             </if>
         </where>
     </select>
+    <select id="listByGroupIds" resultType="cn.idea360.oracle.model.AiProjectUser">
+        SELECT
+        *
+        FROM
+        AI_PROJECT_USER
+        <where>
+            <if test="gids != null and gids.size() > 0">
+                group_id in
+                <foreach collection="gids" item="item"  index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
 
 
 </mapper>

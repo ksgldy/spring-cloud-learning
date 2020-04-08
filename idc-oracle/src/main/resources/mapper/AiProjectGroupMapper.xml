@@ -14,6 +14,15 @@
         <result column="updater" property="updater" />
     </resultMap>
 
+    <!--连表查询-->
+    <resultMap id="Res" type="cn.idea360.oracle.dto.ProjectGroupDTO">
+        <id column="id" property="id" />
+        <result column="group_name" property="groupName" />
+        <collection property="customers" ofType="cn.idea360.oracle.model.AiProjectUser">
+            <result column="customer_id" property="customerId" />
+        </collection>
+    </resultMap>
+
 
     <insert id="insert" parameterType="cn.idea360.oracle.model.AiProjectGroup" useGeneratedKeys="true">
         INSERT INTO ai_project_group ( company_id, group_name, rank, create_time, update_time, creater, updater )
