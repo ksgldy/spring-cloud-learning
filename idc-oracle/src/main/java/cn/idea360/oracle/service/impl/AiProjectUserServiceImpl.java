@@ -1,10 +1,13 @@
 package cn.idea360.oracle.service.impl;
 
 import cn.idea360.oracle.dao.AiProjectUserMapper;
+import cn.idea360.oracle.dto.Customer;
+import cn.idea360.oracle.dto.FilterProjectUserDTO;
 import cn.idea360.oracle.model.AiProjectUser;
 import cn.idea360.oracle.service.AiProjectUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,5 +52,46 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public List<AiProjectUser> filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) {
+
+        // 获取全部客服
+        List<Customer> customers = getCustomers();
+        List<AiProjectUser> groupList = new ArrayList<>();
+        List<AiProjectUser> selfList = null;
+
+        // 获取自己组分组客服
+        try {
+            selfList = aiProjectUserMapper.listByGroupId(filterProjectUserDTO.getGroupId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 所有分组客服
+        try {
+            if (null != filterProjectUserDTO && (filterProjectUserDTO.getDepartmentId() != null || (filterProjectUserDTO.getSearchField() != null && !StringUtils.isEmpty(filterProjectUserDTO.getKeyword())))) {
+                List<String> cids = new ArrayList<>();
+                for (Customer c:customers) {
+                    cids.add(c.getId());
+                }
+                groupList = aiProjectUserMapper.listByCustomerIds(cids);
+
+            } else {
+                groupList = aiProjectUserMapper.listByGroupId(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // todo 后台拼装好返回前端
+        return null;
+    }
+
+
+    // 原查询客服的接口
+    private List<Customer> getCustomers() {
+        return null;
     }
 }

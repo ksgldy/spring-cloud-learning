@@ -29,10 +29,22 @@
             AI_PROJECT_USER
         <where>
             <if test="cids != null and cids.size() > 0">
-               customer_id in 
+               customer_id in
                 <foreach collection="cids" item="item"  index="index" open="(" separator="," close=")">
                     #{item}
                 </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="listByGroupId" resultType="cn.idea360.oracle.model.AiProjectUser">
+        SELECT
+        *
+        FROM
+        AI_PROJECT_USER
+        <where>
+            <if test="groupId != null">
+                AND group_id = #{groupId}
             </if>
         </where>
     </select>

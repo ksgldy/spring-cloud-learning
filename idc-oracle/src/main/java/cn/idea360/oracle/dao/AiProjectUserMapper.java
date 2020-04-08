@@ -14,4 +14,6 @@ public interface AiProjectUserMapper {
 
     List<AiProjectUser> listByCustomerIds(@Param("cids") List<String> customerIds) throws Exception;
 
+    List<AiProjectUser> listByGroupId(@Param("groupId") Long groupId) throws Exception;
+
 }

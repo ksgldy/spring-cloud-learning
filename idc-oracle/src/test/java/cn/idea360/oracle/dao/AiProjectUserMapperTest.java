@@ -40,7 +40,13 @@ class AiProjectUserMapperTest {
     public void listByCustomerIds() throws Exception {
         String[] ids = {"1"};
         List<String> cids = Arrays.asList(ids);
-        List<AiProjectUser> aiProjectUsers = aiProjectUserMapper.listByCustomerIds(cids);
+        List<AiProjectUser> aiProjectUsers = aiProjectUserMapper.listByCustomerIds(null);
+        System.out.println(aiProjectUsers.size());
+    }
+
+    @Test
+    public void listByGroupId() throws Exception {
+        List<AiProjectUser> aiProjectUsers = aiProjectUserMapper.listByGroupId(36L);
         System.out.println(aiProjectUsers.size());
     }
 }
