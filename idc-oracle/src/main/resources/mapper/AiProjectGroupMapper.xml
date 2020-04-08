@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.idea360.oracle.dao.AiProjectGroupMapper">
+    <resultMap id="BaseResultMap" type="cn.idea360.oracle.model.AiProjectGroup">
+        <id column="id" property="id" />
+        <result column="company_id" property="companyId" />
+        <result column="group_name" property="groupName" />
+        <result column="rank" property="rank" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="creater" property="creater" />
+        <result column="updater" property="updater" />
+    </resultMap>
+
+
+    <insert id="insert" parameterType="cn.idea360.oracle.model.AiProjectGroup" useGeneratedKeys="true">
+        INSERT INTO ai_project_group ( company_id, group_name, rank, create_time, update_time, creater, updater )
+        VALUES
+            ( #{companyId}, #{groupName}, #{rank}, #{createTime}, #{updateTime}, #{creater}, #{updater})
+    </insert>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select * from ai_project_group where id = #{id}
+    </select>
+
+</mapper>

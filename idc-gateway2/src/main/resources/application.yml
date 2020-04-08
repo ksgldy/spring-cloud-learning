@@ -25,7 +25,26 @@ spring:
         - id: provider1
           uri: lb://idc-provider1
           predicates:
-            - Path=/p/**
-          #            - RemoteAddr=192.168.124.5/16
+            - Path=/p1/**
           filters:
             - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: default
+                fallbackUri: forward:/defaultfallback # 只有该id下的服务会降级
+        - id: provider2
+          uri: lb://idc-provider2
+          predicates:
+            - Path=/p2/**
+          filters:
+            - StripPrefix=1
+
+# hystrix 信号量隔离，1.5秒后自动超时
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 1500
