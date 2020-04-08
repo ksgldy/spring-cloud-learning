@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface AiProjectUserService {
 
-    void saveOrUpdate(Long groupId, List<Long> customerIdList);
+    void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList);
 }
