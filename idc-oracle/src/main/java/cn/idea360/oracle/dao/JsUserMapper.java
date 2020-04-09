@@ -8,5 +8,5 @@ import java.util.Map;
 
 public interface JsUserMapper {
 
-    List<JsUser> listByMap(@Param("cm") Map<String, Object> columnMap) throws Exception;
+    List<JsUser> listByMap(@Param("cm") Map<String, Object> columnMap);
 }

@@ -5,9 +5,9 @@ import org.apache.ibatis.annotations.Param;
 
 public interface AiRuleMapper {
 
-    int insert(AiRule aiRule) throws Exception;
+    int insert(AiRule aiRule);
 
-    int updateIgnoreNullById(@Param("aiRule") AiRule aiRule) throws Exception;
+    int updateIgnoreNullById(@Param("aiRule") AiRule aiRule);
 
 
 }

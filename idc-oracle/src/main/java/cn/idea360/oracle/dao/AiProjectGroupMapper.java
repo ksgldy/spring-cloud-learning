@@ -8,19 +8,19 @@ import java.util.List;
 
 public interface AiProjectGroupMapper {
 
-    int insert(AiProjectGroup aiProjectGroup) throws Exception;
+    int insert(AiProjectGroup aiProjectGroup);
 
-    int updateIgnoreNullById(@Param("aiProjectGroup") AiProjectGroup aiProjectGroup) throws Exception;
+    int updateIgnoreNullById(@Param("aiProjectGroup") AiProjectGroup aiProjectGroup);
 
-    AiProjectGroup selectById(@Param("id") long id) throws Exception;
+    AiProjectGroup selectById(@Param("id") long id);
 
-    List<AiProjectGroup> listByCustomerIds(@Param("cids") List<String> customerIds) throws Exception;
+    List<AiProjectGroup> listByCustomerIds(@Param("cids") List<String> customerIds);
 
-    List<AiProjectGroup> page(@Param("pageDTO") PageDTO pageDTO) throws Exception;
+    List<AiProjectGroup> page(@Param("pageDTO") PageDTO pageDTO);
 
-    int deleteById(@Param("id") long id) throws Exception;
+    int deleteById(@Param("id") long id);
 
-    int selectLastestRank() throws Exception;
+    int selectLastestRank();
 
     int totalRecord();
 

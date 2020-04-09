@@ -30,7 +30,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
     private AiProjectUserService aiProjectUserService;
 
     @Override
-    public List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO) throws Exception{
+    public List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO){
 
         // todo 分页参数必填，sql没校验
         List<AiProjectGroup> list = aiProjectGroupMapper.page(pageDTO);
@@ -67,7 +67,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception{
+    public boolean addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO){
 
         // 插入AiProjectGroup
         AiProjectGroup aiProjectGroup = new AiProjectGroup();
@@ -92,7 +92,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception {
+    public boolean updateProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO){
 
         Long groupId = aiProjectGroupReqDTO.getId();
         AiProjectGroup aiProjectGroup = aiProjectGroupMapper.selectById(groupId);
@@ -110,7 +110,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
     }
 
     @Override
-    public boolean delProjectGroupById(Long groupId) throws Exception {
+    public boolean delProjectGroupById(Long groupId) {
         int i = aiProjectGroupMapper.deleteById(groupId);
         return i > 0 ? Boolean.TRUE: Boolean.FALSE;
     }

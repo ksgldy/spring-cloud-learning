@@ -8,14 +8,14 @@ import java.util.Map;
 
 public interface AiProjectUserMapper {
 
-    void insertBatch(@Param("aiProjectUserList") List<AiProjectUser> aiProjectUserList) throws Exception;
+    void insertBatch(@Param("aiProjectUserList") List<AiProjectUser> aiProjectUserList);
 
-    int deleteByMap(@Param("cm") Map<String, Object> columnMap) throws Exception;
+    int deleteByMap(@Param("cm") Map<String, Object> columnMap);
 
-    List<AiProjectUser> listByCustomerIds(@Param("cids") List<String> customerIds) throws Exception;
+    List<AiProjectUser> listByCustomerIds(@Param("cids") List<String> customerIds);
 
-    List<AiProjectUser> listByGroupId(@Param("groupId") Long groupId) throws Exception;
+    List<AiProjectUser> listByGroupId(@Param("groupId") Long groupId);
 
-    List<AiProjectUser> listByGroupIds(@Param("gids") List<Long> groupIds) throws Exception;
+    List<AiProjectUser> listByGroupIds(@Param("gids") List<Long> groupIds);
 
 }

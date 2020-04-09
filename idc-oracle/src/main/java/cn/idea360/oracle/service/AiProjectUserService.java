@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AiProjectUserService {
 
-    void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList) throws Exception;
+    void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList);
 
-    AiProjectGroupUserRespVO filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) throws Exception;
+    AiProjectGroupUserRespVO filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO);
 }

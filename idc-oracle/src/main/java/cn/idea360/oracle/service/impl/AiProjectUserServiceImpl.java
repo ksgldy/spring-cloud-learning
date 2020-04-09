@@ -27,7 +27,7 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
     private AiProjectGroupMapper aiProjectGroupMapper;
 
     @Override
-    public void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList) throws Exception{
+    public void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList){
 
         // 先删除group与customer关系
         HashMap<String, Object> map = new HashMap<>();
@@ -57,7 +57,7 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
     }
 
     @Override
-    public AiProjectGroupUserRespVO filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) throws Exception{
+    public AiProjectGroupUserRespVO filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO){
 
         // 获取全部客服
         List<Customer> customers = getCustomers();

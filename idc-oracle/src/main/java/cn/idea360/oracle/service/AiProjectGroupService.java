@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface AiProjectGroupService {
 
-    List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO) throws Exception;
+    List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO);
 
-    boolean addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception;
+    boolean addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO);
 
-    boolean updateProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception;
+    boolean updateProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO);
 
-    boolean delProjectGroupById(Long groupId) throws Exception;
+    boolean delProjectGroupById(Long groupId);
 
     int totalRecord();
 

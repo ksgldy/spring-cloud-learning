@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface JsDepartmentMapper {
 
-    List<JsDepartment> listByDepartmentIds(@Param("departmentIds") List<Integer> departmentIds) throws Exception;
+    List<JsDepartment> listByDepartmentIds(@Param("departmentIds") List<Integer> departmentIds);
 }
