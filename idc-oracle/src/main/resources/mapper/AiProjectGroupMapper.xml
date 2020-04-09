@@ -70,8 +70,8 @@
               ORDER BY RANK DESC
               ) T1 ) T2
         <where>
-            <if test="pageDTO != null and pageDTO.startInde != null">
-                and RN <![CDATA[ >= ]]> #{pageDTO.startInde}
+            <if test="pageDTO != null and pageDTO.startIndex != null">
+                and RN <![CDATA[ >= ]]> #{pageDTO.startIndex}
             </if>
             <if test="pageDTO != null and pageDTO.endIndex != null">
                 AND RN <![CDATA[ <= ]]> #{pageDTO.endIndex}

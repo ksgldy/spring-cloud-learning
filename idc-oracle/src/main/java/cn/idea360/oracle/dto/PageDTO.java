@@ -4,7 +4,7 @@ public class PageDTO {
 
     private Integer page = 1;
     private Integer size = 10;
-    private Integer startInde = 1;
+    private Integer startIndex = 1;
     private Integer endIndex = 10;
     private String keyword;
 
@@ -32,12 +32,12 @@ public class PageDTO {
         this.size = size;
     }
 
-    public Integer getStartInde() {
+    public Integer getStartIndex() {
         return (page-1)*size+1;
     }
 
-    public void setStartInde(Integer startInde) {
-        this.startInde = startInde;
+    public void setStartIndex(Integer startIndex) {
+        this.startIndex = startIndex;
     }
 
     public Integer getEndIndex() {
