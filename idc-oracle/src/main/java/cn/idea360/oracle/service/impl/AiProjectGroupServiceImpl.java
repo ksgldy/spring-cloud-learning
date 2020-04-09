@@ -32,6 +32,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
     @Override
     public List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO) throws Exception{
 
+        // todo 分页参数必填，sql没校验
         List<AiProjectGroup> list = aiProjectGroupMapper.page(pageDTO);
 
         List<Long> gids = new ArrayList<>();
@@ -66,7 +67,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception{
+    public boolean addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception{
 
         // 插入AiProjectGroup
         AiProjectGroup aiProjectGroup = new AiProjectGroup();
@@ -85,15 +86,18 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
 
         // 插入AiProjectUser
         aiProjectUserService.saveOrUpdate(aiProjectGroupReqDTO.getCompanyId(), aiProjectGroup.getId(), aiProjectGroupReqDTO.getUserIds());
+
+        return Boolean.TRUE;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception {
+    public boolean updateProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception {
+
         Long groupId = aiProjectGroupReqDTO.getId();
         AiProjectGroup aiProjectGroup = aiProjectGroupMapper.selectById(groupId);
         if (aiProjectGroup == null) {
-            return;
+            throw new NullPointerException("数据不存在");
         }
 
         aiProjectGroup.setGroupName(aiProjectGroupReqDTO.getGroupName());
@@ -102,13 +106,19 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
         aiProjectGroupMapper.updateIgnoreNullById(aiProjectGroup);
 
         aiProjectUserService.saveOrUpdate(aiProjectGroupReqDTO.getCompanyId(), aiProjectGroup.getId(), aiProjectGroupReqDTO.getUserIds());
-
+        return Boolean.TRUE;
     }
 
     @Override
     public boolean delProjectGroupById(Long groupId) throws Exception {
         int i = aiProjectGroupMapper.deleteById(groupId);
         return i > 0 ? Boolean.TRUE: Boolean.FALSE;
+    }
+
+    @Override
+    public int totalRecord() {
+
+        return aiProjectGroupMapper.totalRecord();
     }
 
 

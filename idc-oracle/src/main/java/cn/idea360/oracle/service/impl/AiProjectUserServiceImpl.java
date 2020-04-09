@@ -1,8 +1,11 @@
 package cn.idea360.oracle.service.impl;
 
+import cn.idea360.oracle.dao.AiProjectGroupMapper;
 import cn.idea360.oracle.dao.AiProjectUserMapper;
+import cn.idea360.oracle.dto.AiProjectGroupUserVo;
 import cn.idea360.oracle.dto.Customer;
 import cn.idea360.oracle.dto.FilterProjectUserDTO;
+import cn.idea360.oracle.model.AiProjectGroup;
 import cn.idea360.oracle.model.AiProjectUser;
 import cn.idea360.oracle.service.AiProjectUserService;
 import cn.idea360.oracle.vo.AiProjectUserRespVO;
@@ -20,6 +23,8 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
 
     @Autowired
     private AiProjectUserMapper aiProjectUserMapper;
+    @Autowired
+    private AiProjectGroupMapper aiProjectGroupMapper;
 
     @Override
     public void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList) throws Exception{
@@ -56,13 +61,17 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
 
         // 获取全部客服
         List<Customer> customers = getCustomers();
-        List<AiProjectUser> groupList = new ArrayList<>();
-        List<AiProjectUser> selfList = null;
+        List<AiProjectUser> projectUserList = new ArrayList<>();
+        List<AiProjectGroup> projectGroupList = new ArrayList<>();
+        List<AiProjectUser> selfList = new ArrayList<>();
 
-        // 获取自己组分组客服
+        // 获取已选客服
         try {
-            Long[] groupIds = {filterProjectUserDTO.getGroupId()};
-            selfList = aiProjectUserMapper.listByGroupIds(Arrays.asList(groupIds));
+            List<Long> groupIds = null;
+            if (filterProjectUserDTO.getGroupId() != null) {
+                groupIds = Arrays.asList(filterProjectUserDTO.getGroupId());
+            }
+            selfList = aiProjectUserMapper.listByGroupIds(groupIds);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,16 +82,44 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
             for (Customer c:customers) {
                 cids.add(c.getId());
             }
-            groupList = aiProjectUserMapper.listByCustomerIds(cids);
+            projectUserList = aiProjectUserMapper.listByCustomerIds(cids);
+            projectGroupList = aiProjectGroupMapper.listByCustomerIds(cids);
 
         } else {
-            groupList = aiProjectUserMapper.listByGroupIds(null);
+            projectUserList = aiProjectUserMapper.listByGroupIds(null);
+            projectGroupList = aiProjectGroupMapper.listByCustomerIds(null);
+        }
+
+
+        HashMap<Object, AiProjectGroup> projectGroupMap = new HashMap<>();
+        HashMap<Object, AiProjectUser> projectUserMap = new HashMap<>();
+        for (AiProjectUser aiProjectUser: projectUserList) {
+            projectUserMap.put(aiProjectUser.getCustomerId(), aiProjectUser);
+        }
+        for (AiProjectGroup aiProjectGroup: projectGroupList) {
+            projectGroupMap.put(aiProjectGroup.getId(), aiProjectGroup);
+        }
+
+        // 可选客服
+        List<AiProjectGroupUserVo> data = new ArrayList();
+        for (Customer customer: customers) {
+            AiProjectGroupUserVo aiProjectGroupUserVo = new AiProjectGroupUserVo();
+            aiProjectGroupUserVo.setUserId(customer.getId());
+            aiProjectGroupUserVo.setName(customer.getName());
+            aiProjectGroupUserVo.setDept(customer.getDept());
+            aiProjectGroupUserVo.setGroupName(projectGroupMap.get(customer.getId())==null?null:projectGroupMap.get(customer.getId()).getGroupName());
+            aiProjectGroupUserVo.setSelected(projectUserMap.get(customer.getId()) == null? false : true);
+            data.add(aiProjectGroupUserVo);
+        }
+
+        // 已选客服
+        for (AiProjectUser aiProjectUser: selfList) {
+            AiProjectGroupUserVo aiProjectGroupUserVo = new AiProjectGroupUserVo();
         }
 
         // 数据封装
         AiProjectUserRespVO aiProjectUserRespVO = new AiProjectUserRespVO();
-        aiProjectUserRespVO.setCustomers(customers);
-        aiProjectUserRespVO.setGroupList(groupList);
+        aiProjectUserRespVO.setCustomers(data);
         aiProjectUserRespVO.setSelfList(selfList);
         return aiProjectUserRespVO;
     }
@@ -90,6 +127,15 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
 
     // 原查询客服的接口
     private List<Customer> getCustomers() {
-        return null;
+        Customer customer1 = new Customer("1", "admin", "dept1", 1);
+        Customer customer2 = new Customer("2", "admin1", "dept1", 1);
+        Customer customer3 = new Customer("3", "admin2", "dept2", 2);
+        Customer customer30 = new Customer("30", "admin3", "dept3", 3);
+        ArrayList<Customer> data = new ArrayList<>();
+        data.add(customer1);
+        data.add(customer2);
+        data.add(customer3);
+        data.add(customer30);
+        return data;
     }
 }

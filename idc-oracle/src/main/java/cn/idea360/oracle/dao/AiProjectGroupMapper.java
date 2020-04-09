@@ -14,12 +14,14 @@ public interface AiProjectGroupMapper {
 
     AiProjectGroup selectById(@Param("id") long id) throws Exception;
 
+    List<AiProjectGroup> listByCustomerIds(@Param("cids") List<String> customerIds) throws Exception;
+
     List<AiProjectGroup> page(@Param("pageDTO") PageDTO pageDTO) throws Exception;
 
     int deleteById(@Param("id") long id) throws Exception;
 
     int selectLastestRank() throws Exception;
 
-    int totalRecord() throws Exception;
+    int totalRecord();
 
 }

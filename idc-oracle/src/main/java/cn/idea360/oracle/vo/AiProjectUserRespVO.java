@@ -1,30 +1,21 @@
 package cn.idea360.oracle.vo;
 
-import cn.idea360.oracle.dto.Customer;
+import cn.idea360.oracle.dto.AiProjectGroupUserVo;
 import cn.idea360.oracle.model.AiProjectUser;
 
 import java.util.List;
 
 public class AiProjectUserRespVO {
 
-    List<Customer> customers;
-    List<AiProjectUser> groupList;
+    List<AiProjectGroupUserVo> customers;
     List<AiProjectUser> selfList;
 
-    public List<Customer> getCustomers() {
+    public List<AiProjectGroupUserVo> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(List<Customer> customers) {
+    public void setCustomers(List<AiProjectGroupUserVo> customers) {
         this.customers = customers;
-    }
-
-    public List<AiProjectUser> getGroupList() {
-        return groupList;
-    }
-
-    public void setGroupList(List<AiProjectUser> groupList) {
-        this.groupList = groupList;
     }
 
     public List<AiProjectUser> getSelfList() {

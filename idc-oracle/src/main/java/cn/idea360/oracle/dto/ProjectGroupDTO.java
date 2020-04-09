@@ -1,7 +1,5 @@
 package cn.idea360.oracle.dto;
 
-import cn.idea360.oracle.model.AiProjectUser;
-
 import java.util.List;
 
 /**

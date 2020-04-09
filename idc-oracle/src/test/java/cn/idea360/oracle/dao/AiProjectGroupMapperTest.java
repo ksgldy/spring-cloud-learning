@@ -32,8 +32,10 @@ class AiProjectGroupMapperTest {
     @Test
     public void updateIgnoreNullById() throws Exception {
         AiProjectGroup aiProjectGroup = new AiProjectGroup();
-        aiProjectGroup.setId(28L);
+        aiProjectGroup.setId(74L);
         aiProjectGroup.setGroupName("update-group-name");
+        aiProjectGroup.setUpdater("1");
+        aiProjectGroup.setUpdateTime(new Date());
         aiProjectGroupMapper.updateIgnoreNullById(aiProjectGroup);
     }
 

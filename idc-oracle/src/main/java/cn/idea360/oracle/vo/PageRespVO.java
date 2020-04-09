@@ -3,7 +3,7 @@ package cn.idea360.oracle.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageRespVO {
+public class PageRespVO<T> {
 
     // 总页数
     private Integer pages = 0;
@@ -14,7 +14,7 @@ public class PageRespVO {
     // 当前页码
     private Integer pageNum = 1;
     // 数据
-    private List<Object> records = new ArrayList<>();
+    private List<T> records = new ArrayList<>();
 
 
     public Integer getPages() {
@@ -49,11 +49,11 @@ public class PageRespVO {
         this.pageNum = pageNum;
     }
 
-    public List<Object> getRecords() {
+    public List<T> getRecords() {
         return records;
     }
 
-    public void setRecords(List<Object> records) {
+    public void setRecords(List<T> records) {
         this.records = records;
     }
 }

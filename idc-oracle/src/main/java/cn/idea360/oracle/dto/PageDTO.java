@@ -2,9 +2,27 @@ package cn.idea360.oracle.dto;
 
 public class PageDTO {
 
+    private Integer page;
+    private Integer size;
     private Integer beginResult;
     private Integer endResult;
     private String keyword;
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
 
     public Integer getBeginResult() {
         return beginResult;

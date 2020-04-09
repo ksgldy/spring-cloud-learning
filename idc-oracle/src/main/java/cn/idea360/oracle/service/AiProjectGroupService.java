@@ -10,10 +10,12 @@ public interface AiProjectGroupService {
 
     List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO) throws Exception;
 
-    void addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception;
+    boolean addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception;
 
-    void updateProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception;
+    boolean updateProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception;
 
     boolean delProjectGroupById(Long groupId) throws Exception;
+
+    int totalRecord();
 
 }
