@@ -80,5 +80,9 @@
         select MAX(rank) AS mrank from ai_project_group
     </select>
 
+    <select id="totalRecord" resultType="java.lang.Integer">
+        select COUNT(1) from ai_project_group;
+    </select>
+
 
 </mapper>

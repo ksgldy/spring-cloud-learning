@@ -20,4 +20,6 @@ public interface AiProjectGroupMapper {
 
     int selectLastestRank() throws Exception;
 
+    int totalRecord() throws Exception;
+
 }

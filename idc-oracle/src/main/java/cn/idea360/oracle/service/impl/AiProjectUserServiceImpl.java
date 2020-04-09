@@ -5,11 +5,13 @@ import cn.idea360.oracle.dto.Customer;
 import cn.idea360.oracle.dto.FilterProjectUserDTO;
 import cn.idea360.oracle.model.AiProjectUser;
 import cn.idea360.oracle.service.AiProjectUserService;
+import cn.idea360.oracle.vo.AiProjectUserRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
     }
 
     @Override
-    public List<AiProjectUser> filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) throws Exception{
+    public AiProjectUserRespVO filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) throws Exception{
 
         // 获取全部客服
         List<Customer> customers = getCustomers();
@@ -59,9 +61,8 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
 
         // 获取自己组分组客服
         try {
-            ArrayList<Long> groupIds = new ArrayList<>();
-            groupIds.add(filterProjectUserDTO.getGroupId());
-            selfList = aiProjectUserMapper.listByGroupIds(groupIds);
+            Long[] groupIds = {filterProjectUserDTO.getGroupId()};
+            selfList = aiProjectUserMapper.listByGroupIds(Arrays.asList(groupIds));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,8 +78,13 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
         } else {
             groupList = aiProjectUserMapper.listByGroupIds(null);
         }
-        // todo 后台拼装好返回前端
-        return null;
+
+        // 数据封装
+        AiProjectUserRespVO aiProjectUserRespVO = new AiProjectUserRespVO();
+        aiProjectUserRespVO.setCustomers(customers);
+        aiProjectUserRespVO.setGroupList(groupList);
+        aiProjectUserRespVO.setSelfList(selfList);
+        return aiProjectUserRespVO;
     }
 
 
