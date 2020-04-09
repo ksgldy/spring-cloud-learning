@@ -68,12 +68,11 @@
                       AND ai.group_name LIKE '%' ||  #{pageDTO.keyword} || '%'
                   </if>
               </where>
+              ORDER BY RANK DESC
               ) T1 ) T2
         WHERE
-            RN BETWEEN #{pageDTO.beginResult}
-                AND #{pageDTO.endResult}
-        ORDER BY
-            RANK
+            RN <![CDATA[ >= ]]> #{pageDTO.beginResult}
+            AND RN <![CDATA[ <= ]]> #{pageDTO.endResult}
     </select>
 
     <select id="selectLastestRank" resultType="java.lang.Integer">

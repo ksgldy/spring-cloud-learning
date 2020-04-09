@@ -2,11 +2,10 @@ server:
   port: 9090
 spring:
   profiles:
-    active: dev
+    active: local
 
 mybatis:
   type-aliases-package: cn.idea360.oracle.model
-#  type-handlers-package: com.example.typehandler
   configuration:
     map-underscore-to-camel-case: true
     default-fetch-size: 100

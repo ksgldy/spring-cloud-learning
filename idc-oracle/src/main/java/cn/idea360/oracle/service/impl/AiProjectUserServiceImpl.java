@@ -8,7 +8,7 @@ import cn.idea360.oracle.dto.FilterProjectUserDTO;
 import cn.idea360.oracle.model.AiProjectGroup;
 import cn.idea360.oracle.model.AiProjectUser;
 import cn.idea360.oracle.service.AiProjectUserService;
-import cn.idea360.oracle.vo.AiProjectUserRespVO;
+import cn.idea360.oracle.vo.AiProjectGroupUserRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -57,7 +57,7 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
     }
 
     @Override
-    public AiProjectUserRespVO filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) throws Exception{
+    public AiProjectGroupUserRespVO filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) throws Exception{
 
         // 获取全部客服
         List<Customer> customers = getCustomers();
@@ -118,10 +118,10 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
         }
 
         // 数据封装
-        AiProjectUserRespVO aiProjectUserRespVO = new AiProjectUserRespVO();
-        aiProjectUserRespVO.setCustomers(data);
-        aiProjectUserRespVO.setSelfList(selfList);
-        return aiProjectUserRespVO;
+        AiProjectGroupUserRespVO aiProjectGroupUserRespVO = new AiProjectGroupUserRespVO();
+//        aiProjectGroupUserRespVO.setCustomers(data);
+//        aiProjectGroupUserRespVO.setSelfList(selfList);
+        return aiProjectGroupUserRespVO;
     }
 
 
