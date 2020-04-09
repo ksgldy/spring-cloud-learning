@@ -34,13 +34,7 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
     public void saveOrUpdate(Integer companyId, Long groupId, Collection<String> customerIdList){
 
         // 先删除group与customer关系
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("groupId", groupId);
-        try {
-            int i = aiProjectUserMapper.deleteByMap(map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.removeByGroupId(groupId);
 
         if(customerIdList == null || customerIdList.size() == 0){
             return ;
@@ -167,6 +161,14 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
         }
         result.setCurrCustomers(currCustomers);
 
+        return result;
+    }
+
+    @Override
+    public int removeByGroupId(Long groupId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("groupId", groupId);
+        int result = aiProjectUserMapper.deleteByMap(map);
         return result;
     }
 

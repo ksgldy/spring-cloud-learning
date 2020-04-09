@@ -118,10 +118,13 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
         return Boolean.TRUE;
     }
 
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean delProjectGroupById(Long groupId) {
-        int i = aiProjectGroupMapper.deleteById(groupId);
-        return i > 0 ? Boolean.TRUE: Boolean.FALSE;
+        aiProjectGroupMapper.deleteById(groupId);
+        aiProjectUserService.removeByGroupId(groupId);
+        return Boolean.TRUE;
     }
 
     @Override

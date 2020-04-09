@@ -10,4 +10,6 @@ public interface AiProjectUserService {
     void saveOrUpdate(Integer companyId, Long groupId, Collection<String> customerIdList);
 
     AiProjectGroupUserRespVO filterAiProjectUser(AiProjectUserQueryDTO aiProjectUserQueryDTO);
+
+    int removeByGroupId(Long groupId);
 }

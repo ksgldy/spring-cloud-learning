@@ -2,17 +2,15 @@ package cn.idea360.oracle.controller;
 
 import cn.idea360.oracle.dto.AiProjectGroupReqDTO;
 import cn.idea360.oracle.dto.PageDTO;
+import cn.idea360.oracle.dto.PageRespDTO;
 import cn.idea360.oracle.service.AiProjectGroupService;
 import cn.idea360.oracle.vo.AiProjectGroupReqVo;
-import cn.idea360.oracle.dto.PageRespDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/ProjectGroup")
@@ -73,21 +71,8 @@ public class AiProjectGroupController {
 
     @RequestMapping(value = "/del/{id}", method = RequestMethod.POST)
     public Object delProjectGroup(@PathVariable Long id) {
-        HashMap<Object, Object> resp = new HashMap<>();
-        resp.put("code", -1);
-        try {
-            boolean b = aiProjectGroupService.delProjectGroupById(id);
-            if (!b) {
-                resp.put("msg", "删除失败");
-                return resp;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            resp.put("msg", "删除失败");
-            return resp;
-        }
-        resp.put("msg", "删除成功");
-        return resp;
+        aiProjectGroupService.delProjectGroupById(id);
+        return R.ok();
     }
 
 
