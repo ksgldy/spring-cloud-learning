@@ -2,11 +2,19 @@ package cn.idea360.oracle.dto;
 
 public class PageDTO {
 
-    private Integer page;
-    private Integer size;
-    private Integer beginResult;
-    private Integer endResult;
+    private Integer page = 1;
+    private Integer size = 10;
+    private Integer startInde = 1;
+    private Integer endIndex = 10;
     private String keyword;
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     public Integer getPage() {
         return page;
@@ -24,27 +32,19 @@ public class PageDTO {
         this.size = size;
     }
 
-    public Integer getBeginResult() {
-        return beginResult;
+    public Integer getStartInde() {
+        return (page-1)*size+1;
     }
 
-    public void setBeginResult(Integer beginResult) {
-        this.beginResult = beginResult;
+    public void setStartInde(Integer startInde) {
+        this.startInde = startInde;
     }
 
-    public Integer getEndResult() {
-        return endResult;
+    public Integer getEndIndex() {
+        return page*size;
     }
 
-    public void setEndResult(Integer endResult) {
-        this.endResult = endResult;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setEndIndex(Integer endIndex) {
+        this.endIndex = endIndex;
     }
 }

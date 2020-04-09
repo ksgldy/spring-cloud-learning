@@ -1,9 +1,9 @@
-package cn.idea360.oracle.vo;
+package cn.idea360.oracle.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageRespVO<T> {
+public class PageRespDTO<T> {
 
     // 总页数
     private Integer pages = 0;
@@ -17,8 +17,10 @@ public class PageRespVO<T> {
     private List<T> records = new ArrayList<>();
 
 
+
     public Integer getPages() {
-        return pages;
+
+        return (int)Math.ceil((double)total/size);
     }
 
     public void setPages(Integer pages) {

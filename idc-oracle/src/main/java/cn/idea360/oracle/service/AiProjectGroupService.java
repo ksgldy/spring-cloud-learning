@@ -2,13 +2,11 @@ package cn.idea360.oracle.service;
 
 import cn.idea360.oracle.dto.AiProjectGroupReqDTO;
 import cn.idea360.oracle.dto.PageDTO;
-import cn.idea360.oracle.dto.ProjectGroupDTO;
-
-import java.util.List;
+import cn.idea360.oracle.dto.PageRespDTO;
 
 public interface AiProjectGroupService {
 
-    List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO);
+    PageRespDTO pageProjectGroup(PageDTO pageDTO);
 
     boolean addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO);
 

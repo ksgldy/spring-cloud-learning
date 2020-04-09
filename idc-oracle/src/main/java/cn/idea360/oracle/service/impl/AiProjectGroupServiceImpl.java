@@ -9,6 +9,7 @@ import cn.idea360.oracle.model.AiProjectGroup;
 import cn.idea360.oracle.model.AiProjectUser;
 import cn.idea360.oracle.service.AiProjectGroupService;
 import cn.idea360.oracle.service.AiProjectUserService;
+import cn.idea360.oracle.dto.PageRespDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,9 +31,9 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
     private AiProjectUserService aiProjectUserService;
 
     @Override
-    public List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO){
+    public PageRespDTO pageProjectGroup(PageDTO pageDTO){
 
-        // todo 分页参数必填，sql没校验
+
         List<AiProjectGroup> list = aiProjectGroupMapper.page(pageDTO);
 
         List<Long> gids = new ArrayList<>();
@@ -41,6 +42,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
         }
 
         List<AiProjectUser> aiProjectUsers = aiProjectUserMapper.listByGroupIds(gids);
+        int totalRecord = aiProjectGroupMapper.totalRecord();
 
         // 数据封装, 减少连表查询.key: groupId, value: uid
         HashMap<Long, List<String>> map = new HashMap<>();
@@ -51,6 +53,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
                 uids = new ArrayList<>();
             }
             uids.add(u.getCustomerId());
+            map.put(u.getGroupId(), uids);
         }
 
         List<ProjectGroupDTO> resp = new ArrayList<>();
@@ -58,11 +61,17 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
             ProjectGroupDTO projectGroupDTO = new ProjectGroupDTO();
             projectGroupDTO.setId(aiProjectGroup.getId());
             projectGroupDTO.setGroupName(aiProjectGroup.getGroupName());
-            projectGroupDTO.setCustomers(map.get(aiProjectGroup.getId()));
+            projectGroupDTO.setCustomers(map.get(aiProjectGroup.getId()) == null?new ArrayList<>():map.get(aiProjectGroup.getId()));
             resp.add(projectGroupDTO);
         }
 
-        return resp;
+        PageRespDTO page = new PageRespDTO();
+        page.setPageNum(pageDTO.getPage());
+        page.setSize(pageDTO.getSize());
+        page.setTotal(totalRecord);
+        page.setRecords(resp);
+
+        return page;
     }
 
     @Transactional(rollbackFor = Exception.class)

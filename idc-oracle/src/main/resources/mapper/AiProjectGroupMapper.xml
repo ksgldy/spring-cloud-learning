@@ -63,16 +63,20 @@
         FROM
             ( SELECT T1.*, ROWNUM RN FROM ( SELECT ai.* FROM AI_PROJECT_GROUP ai
               <where>
-                  1=1
-                  <if test="pageDTO.keyword != null">
+                  <if test="pageDTO != null and pageDTO.keyword != null">
                       AND ai.group_name LIKE '%' ||  #{pageDTO.keyword} || '%'
                   </if>
               </where>
               ORDER BY RANK DESC
               ) T1 ) T2
-        WHERE
-            RN <![CDATA[ >= ]]> #{pageDTO.beginResult}
-            AND RN <![CDATA[ <= ]]> #{pageDTO.endResult}
+        <where>
+            <if test="pageDTO != null and pageDTO.startInde != null">
+                and RN <![CDATA[ >= ]]> #{pageDTO.startInde}
+            </if>
+            <if test="pageDTO != null and pageDTO.endIndex != null">
+                AND RN <![CDATA[ <= ]]> #{pageDTO.endIndex}
+            </if>
+        </where>
     </select>
 
     <select id="selectLastestRank" resultType="java.lang.Integer">
@@ -80,7 +84,7 @@
     </select>
 
     <select id="totalRecord" resultType="java.lang.Integer">
-        select COUNT(1) from ai_project_group;
+        select COUNT(1) from ai_project_group
     </select>
 
     <select id="selectList" resultType="cn.idea360.oracle.model.AiProjectGroup">

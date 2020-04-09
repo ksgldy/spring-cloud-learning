@@ -2,10 +2,9 @@ package cn.idea360.oracle.controller;
 
 import cn.idea360.oracle.dto.AiProjectGroupReqDTO;
 import cn.idea360.oracle.dto.PageDTO;
-import cn.idea360.oracle.dto.ProjectGroupDTO;
-import cn.idea360.oracle.vo.AiProjectGroupReqVo;
 import cn.idea360.oracle.service.AiProjectGroupService;
-import cn.idea360.oracle.vo.PageRespVO;
+import cn.idea360.oracle.vo.AiProjectGroupReqVo;
+import cn.idea360.oracle.dto.PageRespDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -13,9 +12,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/ProjectGroup")
@@ -67,25 +64,10 @@ public class AiProjectGroupController {
     @RequestMapping(value = "/page", method = RequestMethod.POST)
     public Object page(@RequestBody PageDTO pageDTO) {
 
-        List<ProjectGroupDTO> data = new ArrayList<>();
-        try {
-            data = aiProjectGroupService.pageProjectGroup(pageDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        PageRespDTO pageRespDTO = aiProjectGroupService.pageProjectGroup(pageDTO);
 
-        PageRespVO page = new PageRespVO();
-        page.setPageNum(pageDTO.getPage());
-        page.setSize(pageDTO.getSize());
-        page.setRecords(data);
-        page.setTotal(aiProjectGroupService.totalRecord());
+        return R.ok(pageRespDTO);
 
-        HashMap<Object, Object> resp = new HashMap<>();
-        resp.put("code", 0);
-        resp.put("msg", "success");
-        resp.put("data", page);
-
-        return resp;
     }
 
 
