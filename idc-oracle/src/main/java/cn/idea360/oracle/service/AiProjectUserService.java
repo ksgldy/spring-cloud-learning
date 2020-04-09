@@ -1,13 +1,13 @@
 package cn.idea360.oracle.service;
 
-import cn.idea360.oracle.dto.FilterProjectUserDTO;
+import cn.idea360.oracle.dto.AiProjectUserQueryDTO;
 import cn.idea360.oracle.vo.AiProjectGroupUserRespVO;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface AiProjectUserService {
 
-    void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList);
+    void saveOrUpdate(Integer companyId, Long groupId, Collection<String> customerIdList);
 
-    AiProjectGroupUserRespVO filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO);
+    AiProjectGroupUserRespVO filterAiProjectUser(AiProjectUserQueryDTO aiProjectUserQueryDTO);
 }

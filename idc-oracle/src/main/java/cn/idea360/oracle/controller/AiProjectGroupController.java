@@ -1,7 +1,6 @@
 package cn.idea360.oracle.controller;
 
 import cn.idea360.oracle.dto.AiProjectGroupReqDTO;
-import cn.idea360.oracle.dto.FilterProjectUserDTO;
 import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.dto.ProjectGroupDTO;
 import cn.idea360.oracle.vo.AiProjectGroupReqVo;

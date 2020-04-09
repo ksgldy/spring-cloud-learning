@@ -1,6 +1,6 @@
 package cn.idea360.oracle.controller;
 
-import cn.idea360.oracle.dto.FilterProjectUserDTO;
+import cn.idea360.oracle.dto.AiProjectUserQueryDTO;
 import cn.idea360.oracle.service.AiProjectUserService;
 import cn.idea360.oracle.vo.AiProjectGroupUserRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ public class AiProjectUserController {
     private AiProjectUserService aiProjectUserService;
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public Object filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) {
+    public Object filterAiProjectUser(AiProjectUserQueryDTO aiProjectUserQueryDTO) {
 
         AiProjectGroupUserRespVO data = null;
         try {
-            data = aiProjectUserService.filterAiProjectUser(filterProjectUserDTO);
+            data = aiProjectUserService.filterAiProjectUser(aiProjectUserQueryDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }

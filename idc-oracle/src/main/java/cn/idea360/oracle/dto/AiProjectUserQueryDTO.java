@@ -1,10 +1,10 @@
 package cn.idea360.oracle.dto;
 
-public class FilterProjectUserDTO {
+public class AiProjectUserQueryDTO {
 
     private Long groupId;
     private Integer departmentId;
-    private String searchField;
+    private String searchField; // userId|realName
     private String keyword;
 
     public Long getGroupId() {
