@@ -11,7 +11,7 @@ public class ProjectGroupDTO {
 
     private Long id;
     private String groupName;
-    private List<AiProjectUser> customers;
+    private List<String> customers;
 
     public Long getId() {
         return id;
@@ -29,11 +29,12 @@ public class ProjectGroupDTO {
         this.groupName = groupName;
     }
 
-    public List<AiProjectUser> getCustomers() {
+
+    public List<String> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(List<AiProjectUser> customers) {
+    public void setCustomers(List<String> customers) {
         this.customers = customers;
     }
 }

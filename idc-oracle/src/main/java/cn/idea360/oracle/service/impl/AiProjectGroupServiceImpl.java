@@ -12,9 +12,11 @@ import cn.idea360.oracle.service.AiProjectUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -29,7 +31,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
 
     @Override
     public List<ProjectGroupDTO> pageProjectGroup(PageDTO pageDTO) throws Exception{
-        
+
         List<AiProjectGroup> list = aiProjectGroupMapper.page(pageDTO);
 
         List<Long> gids = new ArrayList<>();
@@ -38,8 +40,28 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
         }
 
         List<AiProjectUser> aiProjectUsers = aiProjectUserMapper.listByGroupIds(gids);
-        // todo 数据封装
-        return null;
+
+        // 数据封装, 减少连表查询.key: groupId, value: uid
+        HashMap<Long, List<String>> map = new HashMap<>();
+
+        for (AiProjectUser u: aiProjectUsers) {
+            List<String> uids = map.get(u.getGroupId());
+            if (CollectionUtils.isEmpty(uids)) {
+                uids = new ArrayList<>();
+            }
+            uids.add(u.getCustomerId());
+        }
+
+        List<ProjectGroupDTO> resp = new ArrayList<>();
+        for (AiProjectGroup aiProjectGroup: list) {
+            ProjectGroupDTO projectGroupDTO = new ProjectGroupDTO();
+            projectGroupDTO.setId(aiProjectGroup.getId());
+            projectGroupDTO.setGroupName(aiProjectGroup.getGroupName());
+            projectGroupDTO.setCustomers(map.get(aiProjectGroup.getId()));
+            resp.add(projectGroupDTO);
+        }
+
+        return resp;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -47,7 +69,6 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
     public void addProjectGroup(AiProjectGroupReqDTO aiProjectGroupReqDTO) throws Exception{
 
         // 插入AiProjectGroup
-
         AiProjectGroup aiProjectGroup = new AiProjectGroup();
         aiProjectGroup.setGroupName(aiProjectGroupReqDTO.getGroupName());
         aiProjectGroup.setCompanyId(aiProjectGroupReqDTO.getCompanyId());

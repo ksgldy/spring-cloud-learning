@@ -59,7 +59,9 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
 
         // 获取自己组分组客服
         try {
-            selfList = aiProjectUserMapper.listByGroupId(filterProjectUserDTO.getGroupId());
+            ArrayList<Long> groupIds = new ArrayList<>();
+            groupIds.add(filterProjectUserDTO.getGroupId());
+            selfList = aiProjectUserMapper.listByGroupIds(groupIds);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,7 +75,7 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
             groupList = aiProjectUserMapper.listByCustomerIds(cids);
 
         } else {
-            groupList = aiProjectUserMapper.listByGroupId(null);
+            groupList = aiProjectUserMapper.listByGroupIds(null);
         }
         // todo 后台拼装好返回前端
         return null;
