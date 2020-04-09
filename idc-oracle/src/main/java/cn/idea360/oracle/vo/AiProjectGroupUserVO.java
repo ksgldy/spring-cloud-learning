@@ -2,17 +2,18 @@ package cn.idea360.oracle.vo;
 
 public class AiProjectGroupUserVO {
 
-    private Long id;
+    // 客服id
+    private String id;
     private String realName;
     private String departmentName;
     private String groupName;
     private boolean selected;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

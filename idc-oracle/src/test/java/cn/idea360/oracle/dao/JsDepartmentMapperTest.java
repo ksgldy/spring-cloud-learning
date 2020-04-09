@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 class JsDepartmentMapperTest {
@@ -17,7 +18,9 @@ class JsDepartmentMapperTest {
     @Test
     public void listByDepartmentIds() throws Exception {
 
-        List<JsDepartment> jsDepartments = jsDepartmentMapper.listByDepartmentIds(Arrays.asList(1235));
+        Set<Integer> set = new HashSet<>();
+        set.add(0);
+        List<JsDepartment> jsDepartments = jsDepartmentMapper.listByDepartmentIds(set);
         System.out.println(jsDepartments.size());
     }
 

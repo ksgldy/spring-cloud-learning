@@ -83,19 +83,11 @@
         select COUNT(1) from ai_project_group;
     </select>
 
-    <select id="listByCustomerIds" resultType="cn.idea360.oracle.model.AiProjectGroup">
+    <select id="selectList" resultType="cn.idea360.oracle.model.AiProjectGroup">
         SELECT
         *
         FROM
         ai_project_group
-        <where>
-            <if test="cids != null and cids.size() > 0">
-                customer_id in
-                <foreach collection="cids" item="item"  index="index" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </if>
-        </where>
     </select>
 
 

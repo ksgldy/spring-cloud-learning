@@ -4,7 +4,6 @@ import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.model.AiProjectGroup;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface AiProjectGroupMapper {
@@ -15,7 +14,7 @@ public interface AiProjectGroupMapper {
 
     AiProjectGroup selectById(@Param("id") long id);
 
-    List<AiProjectGroup> listByCustomerIds(@Param("cids") Collection<String> customerIds);
+    List<AiProjectGroup> selectList();
 
     List<AiProjectGroup> page(@Param("pageDTO") PageDTO pageDTO);
 

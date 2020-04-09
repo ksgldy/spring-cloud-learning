@@ -27,22 +27,18 @@ public class AiProjectGroupController {
     @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     public Object addProjectGroup(@RequestBody AiProjectGroupReqVo aiProjectGroupReqVo) {
 
-        HashMap<Object, Object> resp = new HashMap<>();
-        resp.put("code", -1);
-
         if (StringUtils.isEmpty(aiProjectGroupReqVo.getGroupName()) || CollectionUtils.isEmpty(aiProjectGroupReqVo.getUserIds())) {
-            resp.put("msg", "参数错误");
-            return resp;
+            return R.failed("参数错误");
         }
 
 
         AiProjectGroupReqDTO aiProjectGroupReqDTO = new AiProjectGroupReqDTO();
         BeanUtils.copyProperties(aiProjectGroupReqVo, aiProjectGroupReqDTO);
 
-        // 模拟数据
+        // TODO session取数据
         aiProjectGroupReqDTO.setCompanyId(1);
-        aiProjectGroupReqDTO.setCreater("1");
-        aiProjectGroupReqDTO.setUpdater("1");
+        aiProjectGroupReqDTO.setCreater("blm");
+        aiProjectGroupReqDTO.setUpdater("blm");
 
         boolean respState = Boolean.FALSE;
         try {
@@ -53,25 +49,19 @@ public class AiProjectGroupController {
             }
 
             if (!respState) {
-                resp.put("msg", "插入失败");
-                return resp;
+                return R.failed(R.Code.FAILED);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             if (e instanceof DuplicateKeyException) {
-                resp.put("msg", "数据冲突");
+                return R.failed("数据冲突");
             }
             if (e instanceof NullPointerException) {
-                resp.put("msg", "数据不存在");
+                return R.failed("数据不存在");
             }
-            return resp;
-
         }
-
-        resp.put("code", 0);
-        resp.put("msg", "success");
-        return resp;
+        return R.ok();
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.POST)

@@ -4,11 +4,10 @@ import cn.idea360.oracle.dto.AiProjectUserQueryDTO;
 import cn.idea360.oracle.service.AiProjectUserService;
 import cn.idea360.oracle.vo.AiProjectGroupUserRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/ProjectUser")
@@ -18,7 +17,7 @@ public class AiProjectUserController {
     private AiProjectUserService aiProjectUserService;
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public Object filterAiProjectUser(AiProjectUserQueryDTO aiProjectUserQueryDTO) {
+    public Object filterAiProjectUser(@RequestBody AiProjectUserQueryDTO aiProjectUserQueryDTO) {
 
         AiProjectGroupUserRespVO data = null;
         try {
@@ -27,10 +26,6 @@ public class AiProjectUserController {
             e.printStackTrace();
         }
 
-        HashMap<Object, Object> resp = new HashMap<>();
-        resp.put("code", 0);
-        resp.put("msg", "success");
-        resp.put("data", data);
-        return resp;
+        return R.ok(data);
     }
 }

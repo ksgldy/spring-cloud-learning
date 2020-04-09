@@ -4,8 +4,17 @@ import java.util.List;
 
 public class AiProjectGroupUserRespVO {
 
+    private String groupName;
     List<AiProjectGroupUserVO> allCustomers;
     List<AiProjectGroupUserVO> currCustomers;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
     public List<AiProjectGroupUserVO> getAllCustomers() {
         return allCustomers;
