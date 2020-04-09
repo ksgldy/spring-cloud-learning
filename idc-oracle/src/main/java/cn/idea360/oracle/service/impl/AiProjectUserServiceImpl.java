@@ -20,7 +20,7 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
     private AiProjectUserMapper aiProjectUserMapper;
 
     @Override
-    public void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList) {
+    public void saveOrUpdate(Integer companyId, Long groupId, List<String> customerIdList) throws Exception{
 
         // 先删除group与customer关系
         HashMap<String, Object> map = new HashMap<>();
@@ -46,16 +46,11 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
             data.add(aiProjectUser);
         }
 
-        try {
-            aiProjectUserMapper.insertBatch(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        aiProjectUserMapper.insertBatch(data);
     }
 
     @Override
-    public List<AiProjectUser> filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) {
+    public List<AiProjectUser> filterAiProjectUser(FilterProjectUserDTO filterProjectUserDTO) throws Exception{
 
         // 获取全部客服
         List<Customer> customers = getCustomers();
@@ -70,21 +65,16 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
         }
 
         // 所有分组客服
-        try {
-            if (null != filterProjectUserDTO && (filterProjectUserDTO.getDepartmentId() != null || (filterProjectUserDTO.getSearchField() != null && !StringUtils.isEmpty(filterProjectUserDTO.getKeyword())))) {
-                List<String> cids = new ArrayList<>();
-                for (Customer c:customers) {
-                    cids.add(c.getId());
-                }
-                groupList = aiProjectUserMapper.listByCustomerIds(cids);
-
-            } else {
-                groupList = aiProjectUserMapper.listByGroupId(null);
+        if (null != filterProjectUserDTO && (filterProjectUserDTO.getDepartmentId() != null || (filterProjectUserDTO.getSearchField() != null && !StringUtils.isEmpty(filterProjectUserDTO.getKeyword())))) {
+            List<String> cids = new ArrayList<>();
+            for (Customer c:customers) {
+                cids.add(c.getId());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            groupList = aiProjectUserMapper.listByCustomerIds(cids);
 
+        } else {
+            groupList = aiProjectUserMapper.listByGroupId(null);
+        }
         // todo 后台拼装好返回前端
         return null;
     }

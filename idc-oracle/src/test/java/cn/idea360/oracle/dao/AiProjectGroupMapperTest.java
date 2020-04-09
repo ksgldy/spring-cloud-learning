@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 class AiProjectGroupMapperTest {
@@ -28,6 +26,7 @@ class AiProjectGroupMapperTest {
         aiProjectGroup.setCreater("7");
         aiProjectGroup.setUpdater("7");
         aiProjectGroupMapper.insert(aiProjectGroup);
+        System.out.println(aiProjectGroup.getId());
     }
 
     @Test
@@ -57,6 +56,12 @@ class AiProjectGroupMapperTest {
         pageDTO.setKeyword("a2");
         List<AiProjectGroup> page = aiProjectGroupMapper.page(pageDTO);
         System.out.println(page);
+    }
+
+    @Test
+    public void selectLastestRank() throws Exception{
+        long l = aiProjectGroupMapper.selectLastestRank();
+        System.out.println(l);
     }
 
 

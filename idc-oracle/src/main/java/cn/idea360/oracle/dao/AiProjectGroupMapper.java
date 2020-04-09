@@ -18,4 +18,6 @@ public interface AiProjectGroupMapper {
 
     int deleteById(@Param("id") long id) throws Exception;
 
+    int selectLastestRank() throws Exception;
+
 }

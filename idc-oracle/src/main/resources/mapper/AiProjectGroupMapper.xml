@@ -28,6 +28,9 @@
         INSERT INTO ai_project_group ( company_id, group_name, rank, create_time, update_time, creater, updater )
         VALUES
             ( #{companyId}, #{groupName}, #{rank}, #{createTime}, #{updateTime}, #{creater}, #{updater})
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select AI_PROJECT_GROUP_ID_SEQ.CURRVAL from dual
+        </selectKey>
     </insert>
 
     <update id="updateIgnoreNullById">
@@ -72,5 +75,10 @@
         ORDER BY
             RANK
     </select>
+
+    <select id="selectLastestRank" resultType="java.lang.Integer">
+        select MAX(rank) AS mrank from ai_project_group
+    </select>
+
 
 </mapper>

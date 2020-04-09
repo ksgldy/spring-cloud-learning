@@ -18,7 +18,7 @@ class AiProjectUserServiceImplTest {
     private AiProjectUserService aiProjectUserService;
 
     @Test
-    void saveOrUpdate() {
+    void saveOrUpdate() throws Exception{
 
         String[] cids = {"1", "2", "3"};
         List<String> customerIdList = Arrays.asList(cids);

@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@115.28.170.190:1521:ora11g
+    username: jsdev
+    password: 123456

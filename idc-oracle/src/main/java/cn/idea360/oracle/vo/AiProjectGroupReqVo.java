@@ -1,17 +1,12 @@
-package cn.idea360.oracle.dto;
-
-import cn.idea360.oracle.model.AiProjectUser;
+package cn.idea360.oracle.vo;
 
 import java.util.List;
 
-/**
- * 返回列表对象
- */
-public class ProjectGroupDTO {
+public class AiProjectGroupReqVo {
 
     private Long id;
     private String groupName;
-    private List<AiProjectUser> customers;
+    private List<String> userIds;
 
     public Long getId() {
         return id;
@@ -29,11 +24,11 @@ public class ProjectGroupDTO {
         this.groupName = groupName;
     }
 
-    public List<AiProjectUser> getCustomers() {
-        return customers;
+    public List<String> getUserIds() {
+        return userIds;
     }
 
-    public void setCustomers(List<AiProjectUser> customers) {
-        this.customers = customers;
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
     }
 }
