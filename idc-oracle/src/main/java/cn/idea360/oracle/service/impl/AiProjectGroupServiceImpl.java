@@ -149,5 +149,10 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
         return respVO;
     }
 
+    @Override
+    public AiProjectGroup selectById(long id) {
+        return aiProjectGroupMapper.selectById(id);
+    }
+
 
 }

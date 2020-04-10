@@ -3,6 +3,7 @@ package cn.idea360.oracle.service;
 import cn.idea360.oracle.dto.AiProjectGroupReqDTO;
 import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.dto.PageRespDTO;
+import cn.idea360.oracle.model.AiProjectGroup;
 import cn.idea360.oracle.vo.AiProjectGroupDetailRespVO;
 
 public interface AiProjectGroupService {
@@ -18,5 +19,7 @@ public interface AiProjectGroupService {
     int totalRecord();
 
     AiProjectGroupDetailRespVO currGroupDataByGroupId(Long groupId);
+
+    AiProjectGroup selectById(long id);
 
 }

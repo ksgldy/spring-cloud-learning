@@ -4,6 +4,7 @@ import cn.idea360.oracle.dto.AiRuleRankDTO;
 import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.dto.PageRespDTO;
 import cn.idea360.oracle.model.AiRule;
+import cn.idea360.oracle.service.AiProjectGroupService;
 import cn.idea360.oracle.service.AiRuleService;
 import cn.idea360.oracle.vo.AiRuleReqVO;
 import org.springframework.beans.BeanUtils;
@@ -19,9 +20,20 @@ public class AiRuleController {
 
     @Autowired
     private AiRuleService aiRuleService;
+    @Autowired
+    private AiProjectGroupService aiProjectGroupService;
 
     @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     public Object addOrUpdateAiRule(@RequestBody AiRuleReqVO aiRuleReqVO) {
+
+        if (aiRuleReqVO.getGroupId() == null || aiRuleReqVO.getGroupId() <= 0L) {
+            return R.failed(R.Code.FAILED);
+        }
+
+        if (aiProjectGroupService.selectById(aiRuleReqVO.getGroupId()) == null) {
+            return R.failed("参数错误");
+        }
+
 
         boolean result = false;
         AiRule aiRule = new AiRule();
