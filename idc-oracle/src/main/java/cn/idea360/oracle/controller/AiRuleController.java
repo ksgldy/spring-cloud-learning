@@ -60,7 +60,7 @@ public class AiRuleController {
         return R.ok(aiRule);
     }
 
-    @RequestMapping(value = "/del/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/del/{id}", method = RequestMethod.DELETE)
     public Object delAiRule(@PathVariable Long id) {
         boolean result = aiRuleService.removeById(id);
         if (!result) {

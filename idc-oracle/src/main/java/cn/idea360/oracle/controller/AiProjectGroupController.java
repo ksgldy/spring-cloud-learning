@@ -70,7 +70,7 @@ public class AiProjectGroupController {
     }
 
 
-    @RequestMapping(value = "/del/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/del/{id}", method = RequestMethod.DELETE)
     public Object delProjectGroup(@PathVariable Long id) {
         aiProjectGroupService.delProjectGroupById(id);
         return R.ok();

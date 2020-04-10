@@ -31,7 +31,7 @@
 
   ## 删除项目组
 
-  - method: POST
+  - method: DELETE
   - url: /ProjectGroup/del/{groupId}
 
   ## 项目组分页条件查询
@@ -104,7 +104,7 @@
 
   ## 删除规则
 
-  - method: POST
+  - method: DELETE
   - url: /AiRule/del/{ruleId}
 
   ## 规则分页条件查询
