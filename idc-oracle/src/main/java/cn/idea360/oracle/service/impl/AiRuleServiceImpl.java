@@ -25,13 +25,21 @@ public class AiRuleServiceImpl implements AiRuleService {
             aiRule.setId(null);
         }
 
-        // todo 排序
         aiRule.setCreateTime(new Date());
         aiRule.setUpdateTime(new Date());
-        aiRule.setRank(1);
+
         aiRule.setCreater(aiRule.getCreater());
         aiRule.setUpdater(aiRule.getUpdater());
-        aiRuleMapper.insert(aiRule);
+
+        synchronized (this) {
+            Integer currRank = aiRuleMapper.selectLastestRank();
+            if (currRank == null) {
+                currRank = 0;
+            }
+            aiRule.setRank(++currRank);
+            aiRuleMapper.insert(aiRule);
+        }
+
         return Boolean.TRUE;
     }
 
@@ -47,10 +55,13 @@ public class AiRuleServiceImpl implements AiRuleService {
 
         BeanUtils.copyProperties(aiRule, savedAiRule);
 
-        // todo 排序
-        savedAiRule.setRank(1);
+        Integer rank = savedAiRule.getRank();
+
         savedAiRule.setUpdater(aiRule.getUpdater());
         savedAiRule.setUpdateTime(new Date());
+        savedAiRule.setRank(++rank);
+
+
         int i = aiRuleMapper.updateIgnoreNullById(savedAiRule);
         return i > 0? Boolean.TRUE: Boolean.FALSE;
     }

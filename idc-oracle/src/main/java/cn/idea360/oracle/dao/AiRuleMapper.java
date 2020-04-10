@@ -23,4 +23,6 @@ public interface AiRuleMapper {
 
     int updateRank(@Param("arrList")List<AiRuleRankDTO> arrList);
 
+    Integer selectLastestRank();
+
 }
