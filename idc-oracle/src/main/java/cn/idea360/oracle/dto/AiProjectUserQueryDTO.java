@@ -2,18 +2,10 @@ package cn.idea360.oracle.dto;
 
 public class AiProjectUserQueryDTO {
 
-    private Long groupId;
     private Integer departmentId;
     private String searchField; // userId|realName
     private String keyword;
 
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
 
     public Integer getDepartmentId() {
         return departmentId;
