@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.idea360.oracle.dao.AiProjectGroupMapper">
-    <resultMap id="BaseResultMap" type="cn.idea360.oracle.model.AiProjectGroup">
+
+    <resultMap id="aiProjectGroupMap" type="aiProjectGroup">
         <id column="id" property="id" />
         <result column="company_id" property="companyId" />
         <result column="group_name" property="groupName" />
@@ -14,17 +15,9 @@
         <result column="updater" property="updater" />
     </resultMap>
 
-    <!--连表查询-->
-    <resultMap id="Res" type="cn.idea360.oracle.dto.ProjectGroupDTO">
-        <id column="id" property="id" />
-        <result column="group_name" property="groupName" />
-        <collection property="customers" ofType="cn.idea360.oracle.model.AiProjectUser">
-            <result column="customer_id" property="customerId" />
-        </collection>
-    </resultMap>
 
 
-    <insert id="insert" parameterType="cn.idea360.oracle.model.AiProjectGroup" useGeneratedKeys="true">
+    <insert id="insert" parameterType="aiProjectGroup" useGeneratedKeys="true">
         INSERT INTO ai_project_group ( company_id, group_name, rank, create_time, update_time, creater, updater )
         VALUES
             ( #{companyId}, #{groupName}, #{rank}, #{createTime}, #{updateTime}, #{creater}, #{updater})
@@ -53,11 +46,11 @@
         delete from ai_project_group where id = #{id}
     </delete>
 
-    <select id="selectById" resultMap="BaseResultMap">
+    <select id="selectById" resultMap="aiProjectGroupMap">
         select * from ai_project_group where id = #{id}
     </select>
 
-    <select id="page" resultType="cn.idea360.oracle.model.AiProjectGroup">
+    <select id="page" resultMap="aiProjectGroupMap">
         SELECT
             T2.*
         FROM
@@ -87,7 +80,7 @@
         select COUNT(1) from ai_project_group
     </select>
 
-    <select id="selectList" resultType="cn.idea360.oracle.model.AiProjectGroup">
+    <select id="selectList" resultType="aiProjectGroup">
         SELECT
         *
         FROM

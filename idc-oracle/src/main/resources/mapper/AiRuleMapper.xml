@@ -4,7 +4,22 @@
 
 <mapper namespace="cn.idea360.oracle.dao.AiRuleMapper">
 
-    <insert id="insert" parameterType="cn.idea360.oracle.model.AiRule" useGeneratedKeys="true">
+    <resultMap id="aiRuleMap" type="aiRule">
+        <id column="id" property="id" />
+        <result column="company_id" property="companyId" />
+        <result column="group_id" property="groupId" />
+        <result column="rule_name" property="ruleName" />
+        <result column="state" property="state" />
+        <result column="condition" property="condition" />
+        <result column="action" property="action" />
+        <result column="rank" property="rank" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="creater" property="creater" />
+        <result column="updater" property="updater" />
+    </resultMap>
+
+    <insert id="insert" parameterType="aiRule" useGeneratedKeys="true">
         insert into ai_rule (company_id, group_id, rule_name, state, condition, action, rank, create_time, update_time, creater, updater)
         values
             (#{companyId}, #{groupId}, #{ruleName}, #{state}, #{condition}, #{action}, #{rank}, #{createTime}, #{updateTime}, #{creater}, #{updater})
@@ -50,11 +65,11 @@
         delete from ai_rule where id = #{id}
     </delete>
 
-    <select id="selectById" resultType="cn.idea360.oracle.model.AiRule">
+    <select id="selectById" resultMap="aiRuleMap">
       select * from ai_rule where id = #{id}
     </select>
 
-    <select id="page" resultType="cn.idea360.oracle.model.AiRule">
+    <select id="page" resultMap="aiRuleMap">
         SELECT
         T2.*
         FROM

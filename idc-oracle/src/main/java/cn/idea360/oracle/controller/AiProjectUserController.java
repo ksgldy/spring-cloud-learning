@@ -19,7 +19,7 @@ public class AiProjectUserController {
     private AiProjectUserService aiProjectUserService;
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public Object filterAiProjectUser(@RequestBody AiProjectUserQueryDTO aiProjectUserQueryDTO) {
+    public Object filterAiProjectUser(@RequestBody(required = false) AiProjectUserQueryDTO aiProjectUserQueryDTO) {
 
         List<AiProjectGroupUserVO> aiProjectGroupUserVOS = aiProjectUserService.filterAiProjectUser(aiProjectUserQueryDTO);
 

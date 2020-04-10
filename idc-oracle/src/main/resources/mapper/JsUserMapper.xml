@@ -3,7 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.idea360.oracle.dao.JsUserMapper">
-    <select id="listByMap" resultType="cn.idea360.oracle.model.JsUser">
+
+
+    <resultMap id="jsUserMap" type="jsUser">
+        <result column="user_id" property="userId" />
+        <result column="real_name" property="realName" />
+        <result column="department_id" property="departmentId" />
+    </resultMap>
+
+    <select id="listByMap" resultMap="jsUserMap">
         select user_id, real_name, department_id from js_user
         <where>
             <if test="cm != null and cm.departmentId != null and cm.departmentId != 0">
@@ -17,7 +25,7 @@
             </if>
         </where>
     </select>
-    <select id="listByIds" resultType="cn.idea360.oracle.model.JsUser">
+    <select id="listByIds" resultMap="jsUserMap">
         SELECT
         *
         FROM

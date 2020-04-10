@@ -4,6 +4,13 @@
 
 <mapper namespace="cn.idea360.oracle.dao.AiProjectUserMapper">
 
+    <resultMap id="aiProjectUserMap" type="aiProjectUser">
+        <id column="id" property="id" />
+        <result column="company_id" property="companyId" />
+        <result column="group_id" property="groupId" />
+        <result column="customer_id" property="customerId" />
+    </resultMap>
+
     <insert id="insertBatch" parameterType="java.util.List">
         insert into ai_project_user (company_id, group_id, customer_id)
         <foreach collection="aiProjectUserList" item="item"  index="index" separator="UNION ALL">
@@ -22,7 +29,7 @@
         </where>
     </delete>
 
-    <select id="listByCustomerIds" resultType="cn.idea360.oracle.model.AiProjectUser">
+    <select id="listByCustomerIds" resultMap="aiProjectUserMap">
         SELECT
             *
         FROM
@@ -37,7 +44,7 @@
         </where>
     </select>
 
-    <select id="listByGroupId" resultType="cn.idea360.oracle.model.AiProjectUser">
+    <select id="listByGroupId" resultMap="aiProjectUserMap">
         SELECT
         *
         FROM
@@ -49,7 +56,7 @@
         </where>
     </select>
 
-    <select id="listByGroupIds" resultType="cn.idea360.oracle.model.AiProjectUser">
+    <select id="listByGroupIds" resultMap="aiProjectUserMap">
         SELECT
         *
         FROM

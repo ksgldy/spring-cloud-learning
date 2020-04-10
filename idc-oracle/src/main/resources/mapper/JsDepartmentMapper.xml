@@ -3,7 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.idea360.oracle.dao.JsDepartmentMapper">
-    <select id="listByDepartmentIds" resultType="cn.idea360.oracle.model.JsDepartment">
+
+    <resultMap id="jsDepartmentMap" type="jsDepartment">
+        <result column="department_id" property="departmentId" />
+        <result column="name" property="name" />
+    </resultMap>
+
+    <select id="listByDepartmentIds" resultMap="jsDepartmentMap">
         SELECT
         department_id, name
         FROM
