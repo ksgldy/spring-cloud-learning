@@ -110,10 +110,18 @@
   ## 规则分页条件查询
 
   - method: POST
-  - /AiRule/page
+  - url: /AiRule/page
   - headers: Content-Type:application/json
   - requestBody: {
   "page":1,
   "size":10,
   "keyword":""
   }
+  
+  
+  ## 规则上移、下移
+  
+  - POST
+  - url: /AiRule/updateRank
+  - headers: Content-Type:application/json
+  - requestBody: [{"id":1, "rank":1}]
