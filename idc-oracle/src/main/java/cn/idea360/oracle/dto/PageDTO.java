@@ -8,6 +8,11 @@ public class PageDTO {
     private Integer endIndex = 10;
     private String keyword;
 
+    public PageDTO() {
+        this.page = 1;
+        this.size = 10;
+    }
+
     public String getKeyword() {
         return keyword;
     }
@@ -36,15 +41,8 @@ public class PageDTO {
         return (page-1)*size+1;
     }
 
-    public void setStartIndex(Integer startIndex) {
-        this.startIndex = startIndex;
-    }
-
     public Integer getEndIndex() {
         return page*size;
     }
 
-    public void setEndIndex(Integer endIndex) {
-        this.endIndex = endIndex;
-    }
 }

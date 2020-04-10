@@ -87,6 +87,7 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
         aiProjectGroup.setCreater(aiProjectGroupReqDTO.getCreater());
         aiProjectGroup.setUpdater(aiProjectGroupReqDTO.getUpdater());
 
+        // todo 改为数据库操作
         synchronized (this) {
             int currRank = aiProjectGroupMapper.selectLastestRank();
             aiProjectGroup.setRank(++currRank);

@@ -53,8 +53,8 @@ class AiProjectGroupMapperTest {
     @Test
     public void page() throws Exception {
         PageDTO pageDTO = new PageDTO();
-        pageDTO.setStartIndex(1);
-        pageDTO.setEndIndex(2);
+        pageDTO.setPage(1);
+        pageDTO.setSize(10);
 //        pageDTO.setKeyword("a2");
         List<AiProjectGroup> page = aiProjectGroupMapper.page(pageDTO);
         System.out.println(page);

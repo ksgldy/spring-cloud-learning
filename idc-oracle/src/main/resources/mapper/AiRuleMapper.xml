@@ -14,19 +14,25 @@
       update ai_rule
       <set>
           <if test="aiRule.ruleName != null">
-              rule_name = #{aiRule.ruleName}
+              rule_name = #{aiRule.ruleName},
           </if>
           <if test="aiRule.state != null">
-              state = #{aiRule.state}
+              state = #{aiRule.state},
           </if>
           <if test="aiRule.condition != null">
-              condition = #{aiRule.condition}
+              condition = #{aiRule.condition},
           </if>
           <if test="aiRule.action != null">
-              action = #{aiRule.action}
+              action = #{aiRule.action},
           </if>
           <if test="aiRule.rank != null">
-              rank = #{aiRule.rank}
+              rank = #{aiRule.rank},
+          </if>
+          <if test="aiRule.updateTime != null">
+              update_time = #{aiRule.updateTime},
+          </if>
+          <if test="aiRule.updater != null">
+              updater = #{aiRule.updater},
           </if>
       </set>
       WHERE id = #{aiRule.id}
@@ -60,6 +66,9 @@
                 AND RN <![CDATA[ <= ]]> #{pageDTO.endIndex}
             </if>
         </where>
+    </select>
+    <select id="totalRecord" resultType="java.lang.Integer">
+        select COUNT(1) from ai_rule
     </select>
 
 </mapper>

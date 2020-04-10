@@ -18,6 +18,8 @@ public interface AiRuleMapper {
 
     List<AiRule> page(@Param("pageDTO") PageDTO pageDTO);
 
+    int totalRecord();
+
 //    int updateRank(@Param("idup") Long id1, @Param("iddown") Long id2);
 
 }
