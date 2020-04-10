@@ -10,7 +10,6 @@ import cn.idea360.oracle.model.JsUser;
 import cn.idea360.oracle.service.AiProjectUserService;
 import cn.idea360.oracle.service.JsDepartmentService;
 import cn.idea360.oracle.service.JsUserService;
-import cn.idea360.oracle.vo.AiProjectGroupUserRespVO;
 import cn.idea360.oracle.vo.AiProjectGroupUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +54,7 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
     }
 
     @Override
-    public AiProjectGroupUserRespVO filterAiProjectUser(AiProjectUserQueryDTO aiProjectUserQueryDTO) {
+    public List<AiProjectGroupUserVO> filterAiProjectUser(AiProjectUserQueryDTO aiProjectUserQueryDTO) {
 
         HashMap<String, Object> params = new HashMap<>();
 
@@ -131,37 +130,38 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
             allCustomers.add(aiProjectGroupUserVO);
         }
 
-        AiProjectGroupUserRespVO result = new AiProjectGroupUserRespVO();
-        result.setAllCustomers(allCustomers);
+//        AiProjectGroupUserRespVO result = new AiProjectGroupUserRespVO();
+//        result.setAllCustomers(allCustomers);
+//
+//        // 已选客服人员
+//        List<AiProjectUser> currAiProjectUserList = new ArrayList<>();
+//        HashMap<String, AiProjectUser> currAiProjectUserMap = new HashMap<>();
+//        if (aiProjectUserQueryDTO != null && aiProjectUserQueryDTO.getGroupId() != null && aiProjectUserQueryDTO.getGroupId() > 0L) {
+//            currAiProjectUserList = aiProjectUserMapper.listByGroupId(aiProjectUserQueryDTO.getGroupId());
+//            currAiProjectUserMap = new HashMap<>();
+//            for (AiProjectUser aiProjectUser:currAiProjectUserList) {
+//                currAiProjectUserMap.put(aiProjectUser.getCustomerId(), aiProjectUser);
+//            }
+//        }
+//
+//
+//        List<AiProjectGroupUserVO> currCustomers = new ArrayList<>();
+//        for (JsUser jsUser: jsUsers) {
+//
+//            if (currAiProjectUserMap.containsKey(jsUser.getUserId())) {
+//                AiProjectGroupUserVO aiProjectGroupUserVO = new AiProjectGroupUserVO();
+//                aiProjectGroupUserVO.setId(jsUser.getUserId());
+//                aiProjectGroupUserVO.setRealName(jsUser.getRealName());
+//                Long groupId = aiProjectUserQueryDTO.getGroupId();
+//                aiProjectGroupUserVO.setGroupName(aiProjectGroupMap.get(groupId).getGroupName());
+//                aiProjectGroupUserVO.setDepartmentName(jsDepartmentMap.get(jsUser.getDepartmentId()).getName());
+//                aiProjectGroupUserVO.setSelected(true);
+//                currCustomers.add(aiProjectGroupUserVO);
+//            }
+//        }
+//        result.setCurrCustomers(currCustomers);
 
-        // 已选客服人员
-        List<AiProjectUser> currAiProjectUserList = new ArrayList<>();
-        HashMap<String, AiProjectUser> currAiProjectUserMap = new HashMap<>();
-        if (aiProjectUserQueryDTO != null && aiProjectUserQueryDTO.getGroupId() != null && aiProjectUserQueryDTO.getGroupId() > 0L) {
-            currAiProjectUserList = aiProjectUserMapper.listByGroupId(aiProjectUserQueryDTO.getGroupId());
-            currAiProjectUserMap = new HashMap<>();
-            for (AiProjectUser aiProjectUser:currAiProjectUserList) {
-                currAiProjectUserMap.put(aiProjectUser.getCustomerId(), aiProjectUser);
-            }
-        }
-
-
-        List<AiProjectGroupUserVO> currCustomers = new ArrayList<>();
-        for (JsUser jsUser: jsUsers) {
-
-            if (currAiProjectUserMap.containsKey(jsUser.getUserId())) {
-                AiProjectGroupUserVO aiProjectGroupUserVO = new AiProjectGroupUserVO();
-                aiProjectGroupUserVO.setId(jsUser.getUserId());
-                aiProjectGroupUserVO.setRealName(jsUser.getRealName());
-                Long groupId = aiProjectUserQueryDTO.getGroupId();
-                aiProjectGroupUserVO.setGroupName(aiProjectGroupMap.get(groupId).getGroupName());
-                aiProjectGroupUserVO.setDepartmentName(jsDepartmentMap.get(jsUser.getDepartmentId()).getName());
-                currCustomers.add(aiProjectGroupUserVO);
-            }
-        }
-        result.setCurrCustomers(currCustomers);
-
-        return result;
+        return allCustomers;
     }
 
     @Override
@@ -170,6 +170,52 @@ public class AiProjectUserServiceImpl implements AiProjectUserService {
         map.put("groupId", groupId);
         int result = aiProjectUserMapper.deleteByMap(map);
         return result;
+    }
+
+    @Override
+    public List<AiProjectGroupUserVO> listByGroupId(Long groupId) {
+        if (groupId == null || groupId <= 0L) {
+            return new ArrayList<>();
+        }
+
+//        AiProjectGroup aiProjectGroup = aiProjectGroupMapper.selectById(groupId);
+
+        // 获取当前组客服
+        HashMap<String, AiProjectUser> aiProjectUserHashMap = new HashMap<>();
+        List<String> userIds = new ArrayList();
+        List<AiProjectUser> currAiProjectUserList = aiProjectUserMapper.listByGroupId(groupId);
+        for (AiProjectUser aiProjectUser:currAiProjectUserList) {
+            userIds.add(aiProjectUser.getCustomerId());
+            aiProjectUserHashMap.put(aiProjectUser.getCustomerId(), aiProjectUser);
+        }
+
+        // 获取关联客服
+
+        List<Integer> departmentIds = new ArrayList<>();
+        List<JsUser> jsUsers = jsUserService.listByIds(userIds);
+        for(JsUser jsUser: jsUsers) {
+            departmentIds.add(jsUser.getDepartmentId());
+        }
+
+        // 获取部门信息
+        HashMap<Integer, JsDepartment> jsDepartmentHashMap = new HashMap<>();
+        List<JsDepartment> jsDepartments = jsDepartmentService.listByDepartmentIds(departmentIds);
+        for(JsDepartment jsDepartment: jsDepartments) {
+            jsDepartmentHashMap.put(jsDepartment.getDepartmentId(), jsDepartment);
+        }
+
+        // 封装数据
+        List<AiProjectGroupUserVO> currCustomers = new ArrayList<>();
+        for (JsUser jsUser: jsUsers) {
+            AiProjectGroupUserVO aiProjectGroupUserVO = new AiProjectGroupUserVO();
+            aiProjectGroupUserVO.setId(jsUser.getUserId());
+            aiProjectGroupUserVO.setRealName(jsUser.getRealName());
+            aiProjectGroupUserVO.setDepartmentName(jsDepartmentHashMap.get(jsUser.getDepartmentId()).getName());
+            aiProjectGroupUserVO.setSelected(true);
+            currCustomers.add(aiProjectGroupUserVO);
+        }
+
+        return currCustomers;
     }
 
 }

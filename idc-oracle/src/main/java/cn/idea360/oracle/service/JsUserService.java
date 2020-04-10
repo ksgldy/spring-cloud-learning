@@ -8,4 +8,6 @@ import java.util.Map;
 public interface JsUserService {
 
     List<JsUser> listByMap(Map<String, Object> params);
+
+    List<JsUser> listByIds(List<String> ids);
 }

@@ -38,6 +38,14 @@
       WHERE id = #{aiRule.id}
     </update>
 
+    <update id="updateRank">
+        <foreach collection="arrList" item="item"  index="index" separator=";">
+            update ai_rule set
+            rank = #{item.rank}
+            where id = #{item.id}
+        </foreach>
+    </update>
+
     <delete id="removeById">
         delete from ai_rule where id = #{id}
     </delete>

@@ -1,11 +1,13 @@
 package cn.idea360.oracle.dao;
 
+import cn.idea360.oracle.dto.AiRuleRankDTO;
 import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.model.AiRule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -70,6 +72,15 @@ class AiRuleMapperTest {
     @Test
     public void del() {
         int i = aiRuleMapper.removeById(1L);
+        System.out.println(i);
+    }
+
+    @Test
+    public void updateRank() {
+        AiRuleRankDTO aiRuleRankDTO = new AiRuleRankDTO();
+        aiRuleRankDTO.setId(23L);
+        aiRuleRankDTO.setRank(7);
+        int i = aiRuleMapper.updateRank(Arrays.asList(aiRuleRankDTO));
         System.out.println(i);
     }
 }

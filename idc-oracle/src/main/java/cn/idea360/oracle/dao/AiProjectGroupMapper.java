@@ -20,7 +20,7 @@ public interface AiProjectGroupMapper {
 
     int deleteById(@Param("id") long id);
 
-    int selectLastestRank();
+    Integer selectLastestRank();
 
     int totalRecord();
 

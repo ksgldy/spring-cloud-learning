@@ -1,7 +1,7 @@
 package cn.idea360.oracle.service.impl;
 
 import cn.idea360.oracle.dao.AiRuleMapper;
-import cn.idea360.oracle.vo.AiRuleReqVO;
+import cn.idea360.oracle.dto.AiRuleRankDTO;
 import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.dto.PageRespDTO;
 import cn.idea360.oracle.model.AiRule;
@@ -85,5 +85,11 @@ public class AiRuleServiceImpl implements AiRuleService {
         page.setRecords(data);
 
         return page;
+    }
+
+    @Override
+    public boolean updateRank(List<AiRuleRankDTO> arrList) {
+        int result = aiRuleMapper.updateRank(arrList);
+        return result>0? true: false;
     }
 }

@@ -19,4 +19,9 @@ public class JsUserServiceImpl implements JsUserService {
     public List<JsUser> listByMap(Map<String, Object> params) {
         return jsUserMapper.listByMap(params);
     }
+
+    @Override
+    public List<JsUser> listByIds(List<String> ids) {
+        return jsUserMapper.listByIds(ids);
+    }
 }

@@ -4,6 +4,7 @@ import cn.idea360.oracle.dto.AiProjectGroupReqDTO;
 import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.dto.PageRespDTO;
 import cn.idea360.oracle.service.AiProjectGroupService;
+import cn.idea360.oracle.vo.AiProjectGroupDetailRespVO;
 import cn.idea360.oracle.vo.AiProjectGroupReqVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,18 @@ public class AiProjectGroupController {
     public Object delProjectGroup(@PathVariable Long id) {
         aiProjectGroupService.delProjectGroupById(id);
         return R.ok();
+    }
+
+    /**
+     * 当前分组已选客服
+     * @param groupId
+     * @return
+     */
+    @RequestMapping(value = "/detail/{groupId}", method = RequestMethod.GET)
+    public Object filterAiProjectUser(@PathVariable Long groupId) {
+
+        AiProjectGroupDetailRespVO aiProjectGroupDetailRespVO = aiProjectGroupService.currGroupDataByGroupId(groupId);
+        return R.ok(aiProjectGroupDetailRespVO);
     }
 
 

@@ -1,5 +1,6 @@
 package cn.idea360.oracle.dao;
 
+import cn.idea360.oracle.dto.AiRuleRankDTO;
 import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.model.AiRule;
 import org.apache.ibatis.annotations.Param;
@@ -20,6 +21,6 @@ public interface AiRuleMapper {
 
     int totalRecord();
 
-//    int updateRank(@Param("idup") Long id1, @Param("iddown") Long id2);
+    int updateRank(@Param("arrList")List<AiRuleRankDTO> arrList);
 
 }

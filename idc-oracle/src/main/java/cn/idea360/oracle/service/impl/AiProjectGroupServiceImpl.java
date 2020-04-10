@@ -10,6 +10,8 @@ import cn.idea360.oracle.model.AiProjectUser;
 import cn.idea360.oracle.service.AiProjectGroupService;
 import cn.idea360.oracle.service.AiProjectUserService;
 import cn.idea360.oracle.dto.PageRespDTO;
+import cn.idea360.oracle.vo.AiProjectGroupDetailRespVO;
+import cn.idea360.oracle.vo.AiProjectGroupUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,7 +91,10 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
 
         // todo 改为数据库操作
         synchronized (this) {
-            int currRank = aiProjectGroupMapper.selectLastestRank();
+            Integer currRank = aiProjectGroupMapper.selectLastestRank();
+            if (currRank == null) {
+                currRank = 0;
+            }
             aiProjectGroup.setRank(++currRank);
             int insert = aiProjectGroupMapper.insert(aiProjectGroup);
         }
@@ -132,6 +137,16 @@ public class AiProjectGroupServiceImpl implements AiProjectGroupService {
     public int totalRecord() {
 
         return aiProjectGroupMapper.totalRecord();
+    }
+
+    @Override
+    public AiProjectGroupDetailRespVO currGroupDataByGroupId(Long groupId) {
+        AiProjectGroup aiProjectGroup = aiProjectGroupMapper.selectById(groupId);
+        List<AiProjectGroupUserVO> aiProjectGroupUserVOS = aiProjectUserService.listByGroupId(groupId);
+        AiProjectGroupDetailRespVO respVO = new AiProjectGroupDetailRespVO();
+        respVO.setGroupName(aiProjectGroup == null?null: aiProjectGroup.getGroupName());
+        respVO.setCurrCustomers(aiProjectGroupUserVOS);
+        return respVO;
     }
 
 

@@ -17,4 +17,18 @@
             </if>
         </where>
     </select>
+    <select id="listByIds" resultType="cn.idea360.oracle.model.JsUser">
+        SELECT
+        *
+        FROM
+        js_user
+        <where>
+            <if test="ids != null and ids.size() > 0">
+                user_id in
+                <foreach collection="ids" item="item"  index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

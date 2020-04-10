@@ -1,5 +1,6 @@
 package cn.idea360.oracle.controller;
 
+import cn.idea360.oracle.dto.AiRuleRankDTO;
 import cn.idea360.oracle.dto.PageDTO;
 import cn.idea360.oracle.dto.PageRespDTO;
 import cn.idea360.oracle.model.AiRule;
@@ -7,7 +8,10 @@ import cn.idea360.oracle.service.AiRuleService;
 import cn.idea360.oracle.vo.AiRuleReqVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/AiRule")
@@ -36,7 +40,12 @@ public class AiRuleController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return R.failed(R.Code.FAILED);
+            if (e instanceof DuplicateKeyException) {
+                return R.failed("数据冲突");
+            }
+            if (e instanceof NullPointerException) {
+                return R.failed("数据不存在");
+            }
         }
 
         if (!result) {
@@ -64,6 +73,16 @@ public class AiRuleController {
     public Object pageAiRule(@RequestBody PageDTO pageDTO) {
         PageRespDTO page = aiRuleService.page(pageDTO);
         return R.ok(page);
+    }
+
+
+    @RequestMapping(value = "/updateRank", method = RequestMethod.POST)
+    public Object updateAiRuleRank(@RequestBody List<AiRuleRankDTO> aiRuleRankDTOList) {
+        boolean result = aiRuleService.updateRank(aiRuleRankDTOList);
+        if (!result) {
+            return R.failed(R.Code.FAILED);
+        }
+        return R.ok();
     }
 
 

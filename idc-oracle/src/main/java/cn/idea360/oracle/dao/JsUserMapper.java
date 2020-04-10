@@ -9,4 +9,6 @@ import java.util.Map;
 public interface JsUserMapper {
 
     List<JsUser> listByMap(@Param("cm") Map<String, Object> columnMap);
+
+    List<JsUser> listByIds(@Param("ids") List<String> ids);
 }
