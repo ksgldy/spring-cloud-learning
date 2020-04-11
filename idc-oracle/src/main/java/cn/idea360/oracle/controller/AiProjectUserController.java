@@ -18,6 +18,11 @@ public class AiProjectUserController {
     @Autowired
     private AiProjectUserService aiProjectUserService;
 
+    /**
+     * 查询所有可选客服人员
+     * @param aiProjectUserQueryDTO
+     * @return
+     */
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public Object filterAiProjectUser(@RequestBody(required = false) AiProjectUserQueryDTO aiProjectUserQueryDTO) {
 

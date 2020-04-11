@@ -2,9 +2,9 @@ package cn.idea360.oracle.dto;
 
 public class AiProjectUserQueryDTO {
 
-    private Integer departmentId;
-    private String searchField; // userId|realName
-    private String keyword;
+    private Integer departmentId; // 部门id
+    private String searchField; // 过滤类型: userId|realName
+    private String keyword; // 查询关键词
 
 
     public Integer getDepartmentId() {
