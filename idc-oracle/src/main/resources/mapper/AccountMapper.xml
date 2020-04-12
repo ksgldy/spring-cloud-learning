@@ -7,13 +7,13 @@
     <!--resultType是直接表示返回类型的(对应着我们的model对象中的实体)，而resultMap则是对外部ResultMap的引用(提前定义了db和model之间的隐射key-value关系)-->
     <resultMap id="accountMap" type="account">
         <id column="id" property="id" />
-        <result column="real_name" property="realName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="real_name" property="realName"/>
         <result column="job_number" property="jobNumber" />
         <result column="create_time" property="createTime" />
     </resultMap>
 
     <!--插入单条数据，自增主键通过序列和触发器实现-->
-    <insert id="insert">
+    <insert id="insert"  parameterType="account" useGeneratedKeys="true">
         insert into account (real_name, job_number, create_time)
         values
             (#{realName}, #{jobNumber}, #{createTime})
@@ -53,7 +53,7 @@
 
     <!--根据主键id查询数据-->
     <select id="selectById" resultMap="accountMap">
-        select id, real_name, job_number, create_time from account where id = #{id}
+        select * from account where id = #{id}
     </select>
 
     <!--根据其他字段查询数据-->

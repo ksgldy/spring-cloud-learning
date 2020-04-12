@@ -46,7 +46,7 @@ class AiProjectGroupMapperTest {
 
     @Test
     public void selectById() throws Exception {
-        AiProjectGroup aiProjectGroup = aiProjectGroupMapper.selectById(1L);
+        AiProjectGroup aiProjectGroup = aiProjectGroupMapper.selectById(81L);
         System.out.println(aiProjectGroup);
     }
 

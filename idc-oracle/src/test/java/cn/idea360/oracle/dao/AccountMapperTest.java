@@ -49,7 +49,7 @@ class AccountMapperTest {
 
     @Test
     public void selectById() {
-        Account account = accountMapper.selectById(1);
+        Account account = accountMapper.selectById(2);
         System.out.println(account.toString());
     }
 
