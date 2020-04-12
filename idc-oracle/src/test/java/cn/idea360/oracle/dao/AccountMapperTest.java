@@ -49,7 +49,7 @@ class AccountMapperTest {
 
     @Test
     public void selectById() {
-        Account account = accountMapper.selectById(2);
+        Account account = accountMapper.selectById(4);
         System.out.println(account.toString());
     }
 
@@ -71,8 +71,17 @@ class AccountMapperTest {
     @Test
     public void selectPage() {
         Page<Account> page = new Page<>(1, 10);
+        HashMap<Object, Object> condition = new HashMap<>();
+        condition.put("keyword", "ad");
+        page.setCondition(condition);
         List<Account> accounts = accountMapper.selectPage(page);
         page.setRecords(accounts);
         System.out.println(page);
+    }
+
+    @Test
+    public void listAll() {
+        List<Account> accounts = accountMapper.listAll();
+        System.out.println(accounts);
     }
 }

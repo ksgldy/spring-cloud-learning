@@ -52,7 +52,7 @@
     </delete>
 
     <!--根据主键id查询数据-->
-    <select id="selectById" resultMap="accountMap">
+    <select id="selectById" parameterType="integer" resultMap="accountMap">
         select * from account where id = #{id}
     </select>
 
@@ -95,6 +95,9 @@
                 AND RN <![CDATA[ <= ]]> #{page.endIndex}
             </if>
         </where>
+    </select>
+    <select id="listAll" resultType="cn.idea360.oracle.model.Account">
+        select * from account
     </select>
 
 </mapper>

@@ -65,4 +65,10 @@ public interface AccountMapper {
      */
     List<Account> selectPage(@Param("page") Page page);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<Account> listAll();
+
 }

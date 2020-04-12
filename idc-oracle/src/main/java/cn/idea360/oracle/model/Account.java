@@ -1,5 +1,7 @@
 package cn.idea360.oracle.model;
 
+import lombok.Data;
+
 import java.util.Date;
 
 public class Account {
@@ -12,6 +14,9 @@ public class Account {
     private Integer jobNumber;
     // 创建时间
     private Date createTime;
+
+    public Account() {
+    }
 
     public Account(String realName, Integer jobNumber) {
         this.realName = realName;
@@ -49,5 +54,15 @@ public class Account {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", realName='" + realName + '\'' +
+                ", jobNumber=" + jobNumber +
+                ", createTime=" + createTime +
+                '}';
     }
 }
