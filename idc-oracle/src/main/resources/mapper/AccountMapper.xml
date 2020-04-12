@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.idea360.oracle.dao.AccountMapper">
+
+    <!--resultType是直接表示返回类型的(对应着我们的model对象中的实体)，而resultMap则是对外部ResultMap的引用(提前定义了db和model之间的隐射key-value关系)-->
+    <resultMap id="accountMap" type="account">
+        <id column="id" property="id" />
+        <result column="real_name" property="realName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="job_number" property="jobNumber" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!--插入单条数据，自增主键通过序列和触发器实现-->
+    <insert id="insert">
+        insert into account (real_name, job_number, create_time)
+        values
+            (#{realName}, #{jobNumber}, #{createTime})
+        <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+            select ACCOUNT_ID_SEQ.CURRVAL from dual
+        </selectKey>
+    </insert>
+
+    <!--通过list批量插入数据-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into account (real_name, job_number, create_time)
+        <foreach collection="coll" item="item"  index="index" separator="UNION ALL">
+            select
+            #{item.realName}, #{item.jobNumber}, #{item.createTime}
+            from dual
+        </foreach>
+    </insert>
+
+    <!--更新数据-->
+    <update id="updateIgnoreNullById">
+        update account
+        <set>
+            <if test="et.realName != null">
+                real_name = #{et.realName},
+            </if>
+            <if test="et.jobNumber != null">
+                job_number = #{et.jobNumber},
+            </if>
+        </set>
+        where id = #{et.id}
+    </update>
+
+    <!--根据主键id移除数据-->
+    <delete id="removeById">
+        delete from account where id = #{id}
+    </delete>
+
+    <!--根据主键id查询数据-->
+    <select id="selectById" resultMap="accountMap">
+        select id, real_name, job_number, create_time from account where id = #{id}
+    </select>
+
+    <!--根据其他字段查询数据-->
+    <select id="selectByMap" resultMap="accountMap">
+        select * from account
+        <where>
+            <if test="cm != null and cm.realName != null">
+                and real_name = #{cm.realName}
+            </if>
+        </where>
+    </select>
+
+    <!--根据id数组查询数据-->
+    <select id="selectByIds" resultMap="accountMap">
+        select * from account where id in
+        <foreach collection="coll" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!--根据分页参数查询数据-->
+    <select id="selectPage" resultMap="accountMap">
+        SELECT
+        T2.*
+        FROM
+        ( SELECT T1.*, ROWNUM RN FROM ( SELECT a.* FROM account a
+        <where>
+            <if test="page != null and page.condition != null and page.condition.keyword != null">
+                AND a.real_name LIKE '%' ||  #{page.condition.keyword} || '%'
+            </if>
+        </where>
+        ORDER BY id DESC
+        ) T1 ) T2
+        <where>
+            <if test="page != null and page.startIndex != null">
+                and RN <![CDATA[ >= ]]> #{page.startIndex}
+            </if>
+            <if test="page != null and page.endIndex != null">
+                AND RN <![CDATA[ <= ]]> #{page.endIndex}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -8,6 +8,7 @@
         <typeAlias alias="aiRule" type="cn.idea360.oracle.model.AiRule"/>
         <typeAlias alias="aiProjectUser" type="cn.idea360.oracle.model.AiProjectUser"/>
         <typeAlias alias="aiProjectGroup" type="cn.idea360.oracle.model.AiProjectGroup"/>
+        <typeAlias alias="account" type="cn.idea360.oracle.model.Account"/>
     </typeAliases>
 
 </configuration>

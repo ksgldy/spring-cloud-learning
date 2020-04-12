@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.idea360.oracle.dao.SysUserMapper">
+
+    <insert id="insert">
+      insert into sys_user(user_name, job_number, create_time)
+      values
+          (#{sysUser.userName}, #{sysUser.jobNumber}, #{sysUser.createTime})
+
+    </insert>
+    <select id="selectById" resultType="cn.idea360.oracle.model.SysUser">
+        select * from sys_user where id = #{id}
+    </select>
+
+
+</mapper>
