@@ -12,11 +12,12 @@
         <result column="create_time" property="createTime" />
     </resultMap>
 
+
     <!--插入单条数据，自增主键通过序列和触发器实现-->
     <insert id="insert"  parameterType="account" useGeneratedKeys="true">
-        insert into account (real_name, job_number, create_time)
+        insert into account (id, real_name, job_number, create_time)
         values
-            (#{realName}, #{jobNumber}, #{createTime})
+            (ACCOUNT_ID_SEQ.nextval, #{realName}, #{jobNumber}, #{createTime})
         <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
             select ACCOUNT_ID_SEQ.CURRVAL from dual
         </selectKey>
@@ -96,8 +97,11 @@
             </if>
         </where>
     </select>
-    <select id="listAll" resultType="cn.idea360.oracle.model.Account">
+
+    <select id="listAll" resultType="cn.idea360.oracle.model.Account" >
         select * from account
     </select>
+
+
 
 </mapper>
