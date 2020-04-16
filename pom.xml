@@ -13,6 +13,7 @@
         <module>idc-gateway2</module>
         <module>idc-oracle</module>
         <module>idc-wx</module>
+        <module>idc-wechat</module>
     </modules>
 
     <packaging>pom</packaging>
