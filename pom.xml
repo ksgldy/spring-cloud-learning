@@ -11,6 +11,8 @@
         <module>idc-provider1</module>
         <module>idc-provider2</module>
         <module>idc-gateway2</module>
+        <module>idc-oracle</module>
+        <module>idc-wx</module>
     </modules>
 
     <packaging>pom</packaging>

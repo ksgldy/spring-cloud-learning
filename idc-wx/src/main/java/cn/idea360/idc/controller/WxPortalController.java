@@ -1,6 +1,7 @@
 package cn.idea360.idc.controller;
 
 import cn.idea360.idc.service.WxService;
+import cn.idea360.idc.utils.HttpUtils;
 import cn.idea360.idc.utils.WxServiceHttpClient;
 import cn.idea360.idc.utils.WxXmlMessage;
 import cn.idea360.idc.utils.XmlConvert;
@@ -19,6 +20,8 @@ public class WxPortalController {
     private WxService wxService;
     @Autowired
     private WxServiceHttpClient wxServiceHttpClient;
+    @Autowired
+    private HttpUtils httpUtils;
 
     /**
      *
@@ -74,16 +77,20 @@ public class WxPortalController {
         WxXmlMessage callBackMessage = XmlConvert.convertXml2Message(requestBody);
         logger.info("收到message: {}", callBackMessage.toString());
 
-        // 获取access_token
-        String accessToken = wxServiceHttpClient.getAccessToken();
-        logger.info("accessToken: {}", accessToken);
+        if (callBackMessage.getEvent().equals("subscribe")) {
+            // 获取access_token
+            String accessToken = httpUtils.getAccessToken();
+            logger.info("accessToken: {}", accessToken);
 
-        // 获取用户信息
-        Object userInfo = wxServiceHttpClient.getUserInfo(accessToken, openid);
-        logger.info("userInfo: {}", userInfo);
+            // 获取用户信息
+            Object userInfo = wxServiceHttpClient.getUserInfo(accessToken, openid);
+            logger.info("userInfo: {}", userInfo);
 
-        // 发送模板消息
-        wxServiceHttpClient.sendTemplateMessage(openid, accessToken);
+            // 发送模板消息
+//            wxServiceHttpClient.sendTemplateMessage(openid, accessToken);
+        }
+
+
         return null;
     }
 }

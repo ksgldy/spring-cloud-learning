@@ -10,6 +10,7 @@ public class WxXmlMessage implements Serializable {
     private String msgType;
     private String event;
     private String eventKey;
+    private String ticket;
 
     public String getToUser() {
         return toUser;
@@ -59,6 +60,14 @@ public class WxXmlMessage implements Serializable {
         this.eventKey = eventKey;
     }
 
+    public String getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
+    }
+
     @Override
     public String toString() {
         return "WxXmlMessage{" +
@@ -68,6 +77,7 @@ public class WxXmlMessage implements Serializable {
                 ", msgType='" + msgType + '\'' +
                 ", event='" + event + '\'' +
                 ", eventKey='" + eventKey + '\'' +
+                ", ticket='" + ticket + '\'' +
                 '}';
     }
 }
