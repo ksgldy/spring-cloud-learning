@@ -1,11 +1,11 @@
 package cn.idea360.idcwechat.service;
 
-import cn.idea360.idcwechat.bean.WxAccessToken;
-import cn.idea360.idcwechat.bean.WxUser;
-import cn.idea360.idcwechat.bean.WxXmlMessage;
+import cn.idea360.idcwechat.bean.*;
 import cn.idea360.idcwechat.config.WxConfig;
 import cn.idea360.idcwechat.utils.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +50,15 @@ public class WxService {
      */
     public String getAccessToken() throws Exception {
 
-        String url = String.format(WxUrl.GET_ACCESS_TOKEN.getPath(), wxConfig.getAppId(), wxConfig.getSecret());
-        String responseJson = HttpUtils.newGetRequest(url);
+        if (wxConfig.getAccessToken() == null) {
+            String url = String.format(WxUrl.GET_ACCESS_TOKEN.getPath(), wxConfig.getAppId(), wxConfig.getSecret());
+            String responseJson = HttpUtils.newGetRequest(url);
 
-        WxAccessToken wxAccessToken = JsonMapper.build().fromJson(responseJson, WxAccessToken.class, true);
-        wxConfig.setAccessToken(wxAccessToken.getAccessToken());
-        return wxAccessToken.getAccessToken();
+            WxAccessToken wxAccessToken = JsonMapper.build().fromJson(responseJson, WxAccessToken.class, true);
+            wxConfig.setAccessToken(wxAccessToken.getAccessToken());
+            return wxAccessToken.getAccessToken();
+        }
+        return wxConfig.getAccessToken();
     }
 
     /**
@@ -70,17 +73,36 @@ public class WxService {
      * 创建二维码ticket
      * @return
      */
-    public String getTicket() {
-        return null;
+    public QrTicket getTicket(String userId) {
+        String url = String.format(WxUrl.CREATE_QRCODE.getPath(), wxConfig.getAccessToken());
+        WxQrReq wxQrReq = new WxQrReq(userId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        QrTicket qrTicket = null;
+        try {
+            String json= objectMapper.writeValueAsString(wxQrReq);
+            String response = HttpUtils.newPostRequest(url, json);
+            qrTicket = objectMapper.readValue(response, QrTicket.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return qrTicket;
     }
 
-    /**
-     * 通过ticket换取二维码
-     * @return
-     */
-    public String getQrCode() {
-        return null;
-    }
+
+//    /**
+//     * 通过ticket换取二维码
+//     * @return
+//     */
+//    public String getQrCode(String userId) {
+//        QrTicket ticket = getTicket(userId);
+//        if (ticket == null) {
+//            return null;
+//        }
+//        String url = String.format(WxUrl.GET_QRCODE.getPath(), ticket.getTicket());
+//        String response = HttpUtils.newGetRequest(url);
+//        return response;
+//    }
 
     /**
      * 获取用户信息
@@ -141,5 +163,14 @@ public class WxService {
         if (wxXmlMessage.getMsgType().equals("event") && wxXmlMessage.getEvent().equals("unsubscribe")) {
             logger.info("有用户取关了, openId: {}", wxXmlMessage.getFromUser());
         }
+    }
+
+    public String sendTemplateMessage(WxTemplateMessage wxTemplateMessage) throws Exception{
+        String url = String.format(WxUrl.SEND_TEMPLATE_MESSAGE.getPath(), wxConfig.getAccessToken());
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        String json = objectMapper.writeValueAsString(wxTemplateMessage);
+        String response = HttpUtils.newPostRequest(url, json);
+        return response;
     }
 }

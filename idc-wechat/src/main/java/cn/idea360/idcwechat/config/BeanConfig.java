@@ -1,13 +1,22 @@
 package cn.idea360.idcwechat.config;
 
+import cn.idea360.idcwechat.service.AccessTokenThread;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class BeanConfig {
+
+    @Autowired
+    WxConfig wxConfig;
 
     @Bean
     public WxConfig loadConfig() {
@@ -25,5 +34,11 @@ public class BeanConfig {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @PostConstruct
+    public void initWx() {
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 2, 10, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10));
+        threadPoolExecutor.execute(new AccessTokenThread(wxConfig));
     }
 }

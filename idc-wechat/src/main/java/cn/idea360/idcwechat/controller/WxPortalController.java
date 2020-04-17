@@ -1,6 +1,8 @@
 package cn.idea360.idcwechat.controller;
 
 
+import cn.idea360.idcwechat.bean.QrTicket;
+import cn.idea360.idcwechat.bean.WxTemplateMessage;
 import cn.idea360.idcwechat.service.WxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,5 +74,39 @@ public class WxPortalController {
         }
 
         return null;
+    }
+
+    /**
+     * http://localhost:80/weixin/receive/90/qr
+     * 换取二维码    https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s
+     * @return
+     */
+    @RequestMapping(value = "/qr", method = RequestMethod.GET)
+    public Object createQrCode() {
+        String userId = "1";
+        try {
+            wxService.getAccessToken();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        QrTicket ticket = wxService.getTicket(userId);
+        return ticket;
+    }
+
+    /**
+     * http://localhost:80/weixin/receive/90/sendTemplateMessage
+     * @param wxTemplateMessage
+     * @return
+     */
+    @RequestMapping(value = "sendTemplateMessage", method = RequestMethod.POST)
+    public Object sendTemplateMessage(@RequestBody WxTemplateMessage wxTemplateMessage) {
+        String response = null;
+        try {
+            response = wxService.sendTemplateMessage(wxTemplateMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "发送失败";
+        }
+        return response;
     }
 }

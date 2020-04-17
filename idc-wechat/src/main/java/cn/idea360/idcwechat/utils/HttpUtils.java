@@ -7,6 +7,8 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -24,6 +26,27 @@ public class HttpUtils {
 
             HttpGet httpget = new HttpGet(url);
             HttpResponse response = httpclient.execute(httpget);
+            HttpEntity entity = response.getEntity();
+            result = EntityUtils.toString(response.getEntity());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            httpclient.getConnectionManager().shutdown();
+        }
+
+        return result;
+    }
+
+    public static String newPostRequest(String url, String body) {
+        HttpClient httpclient = new DefaultHttpClient();
+        String result = null;
+        try {
+
+            HttpPost httpPost = new HttpPost(url);
+            StringEntity stringEntity = new StringEntity(body, "utf-8");
+            httpPost.setEntity(stringEntity);
+            HttpResponse response = httpclient.execute(httpPost);
             HttpEntity entity = response.getEntity();
             result = EntityUtils.toString(response.getEntity());
 

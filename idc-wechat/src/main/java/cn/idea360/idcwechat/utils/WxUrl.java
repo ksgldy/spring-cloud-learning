@@ -12,7 +12,10 @@ public enum  WxUrl {
     GET_QRCODE("https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s"),
 
     // 获取用户信息
-    GET_USERINFO("https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN")
+    GET_USERINFO("https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN"),
+
+    // 发送模板消息
+    SEND_TEMPLATE_MESSAGE("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s")
     ;
 
     private String path;
