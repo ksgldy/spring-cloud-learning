@@ -1,6 +1,6 @@
 package cn.idea360.idcwechat.bean;
 
-public class QrTicket {
+public class WxQrTicket {
     private String ticket;
     private String url;
 

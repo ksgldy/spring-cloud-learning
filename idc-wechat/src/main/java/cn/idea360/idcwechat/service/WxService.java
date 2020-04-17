@@ -73,20 +73,20 @@ public class WxService {
      * 创建二维码ticket
      * @return
      */
-    public QrTicket getTicket(String userId) {
+    public WxQrTicket getTicket(String userId) {
         String url = String.format(WxUrl.CREATE_QRCODE.getPath(), wxConfig.getAccessToken());
         WxQrReq wxQrReq = new WxQrReq(userId);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        QrTicket qrTicket = null;
+        WxQrTicket wxQrTicket = null;
         try {
             String json= objectMapper.writeValueAsString(wxQrReq);
             String response = HttpUtils.newPostRequest(url, json);
-            qrTicket = objectMapper.readValue(response, QrTicket.class);
+            wxQrTicket = objectMapper.readValue(response, WxQrTicket.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return qrTicket;
+        return wxQrTicket;
     }
 
 
@@ -158,6 +158,7 @@ public class WxService {
             logger.info("有新用户关注, openId: {}", wxXmlMessage.getFromUser());
             getAccessToken();
             WxUser userInfo = getUserInfo(wxXmlMessage.getFromUser());
+
         }
 
         if (wxXmlMessage.getMsgType().equals("event") && wxXmlMessage.getEvent().equals("unsubscribe")) {

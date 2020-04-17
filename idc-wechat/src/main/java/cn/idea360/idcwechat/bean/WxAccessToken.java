@@ -5,7 +5,6 @@ import cn.idea360.idcwechat.utils.JsonMapper;
 import java.io.Serializable;
 
 public class WxAccessToken implements Serializable {
-    private static final long serialVersionUID = 8709719312922168909L;
 
     private String accessToken;
 

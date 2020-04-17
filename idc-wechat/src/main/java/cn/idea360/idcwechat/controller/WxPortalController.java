@@ -1,7 +1,7 @@
 package cn.idea360.idcwechat.controller;
 
 
-import cn.idea360.idcwechat.bean.QrTicket;
+import cn.idea360.idcwechat.bean.WxQrTicket;
 import cn.idea360.idcwechat.bean.WxTemplateMessage;
 import cn.idea360.idcwechat.service.WxService;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/weixin/receive/90")
+@RequestMapping("/console/Service/weixin/receive")
 public class WxPortalController {
 
     private static final Logger logger = LoggerFactory.getLogger(WxPortalController.class);
@@ -89,7 +89,7 @@ public class WxPortalController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        QrTicket ticket = wxService.getTicket(userId);
+        WxQrTicket ticket = wxService.getTicket(userId);
         return ticket;
     }
 
