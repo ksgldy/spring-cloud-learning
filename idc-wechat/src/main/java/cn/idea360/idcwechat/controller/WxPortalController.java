@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/console/Service/weixin/receive")
+@RequestMapping("/weixin/sign")
 public class WxPortalController {
 
     private static final Logger logger = LoggerFactory.getLogger(WxPortalController.class);
@@ -73,7 +73,7 @@ public class WxPortalController {
             e.printStackTrace();
         }
 
-        return null;
+        return "遇见你真好";
     }
 
     /**
