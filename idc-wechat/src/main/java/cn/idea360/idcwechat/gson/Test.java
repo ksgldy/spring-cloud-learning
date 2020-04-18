@@ -3,6 +3,7 @@ package cn.idea360.idcwechat.gson;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.thoughtworks.xstream.XStream;
 
 import java.util.Arrays;
 
@@ -29,6 +30,7 @@ public class Test {
         System.out.println(s1);
         Item item1 = gson.fromJson(s1, Item.class);
         System.out.println(item1);
+
 
 
     }
