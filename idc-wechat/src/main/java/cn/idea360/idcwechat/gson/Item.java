@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class Item implements Serializable {
 
-    private String name;
+    private String userName;
     private String color;
     private String value;
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getColor() {

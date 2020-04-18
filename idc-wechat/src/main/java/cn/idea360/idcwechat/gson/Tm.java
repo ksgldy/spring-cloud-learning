@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Tm implements Serializable {
 
-    private String username;
+    private String userName;
     private List<Item> data;
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public List<Item> getData() {
