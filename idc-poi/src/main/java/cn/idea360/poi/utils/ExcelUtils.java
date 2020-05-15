@@ -15,8 +15,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static javax.swing.UIManager.getInt;
-
 @Slf4j
 public class ExcelUtils {
 
@@ -81,53 +79,10 @@ public class ExcelUtils {
                     if (cell == null) {
                         continue;
                     }
+                    // 获取列值
+                    Object value = getCellValue(cell);
                     // 设置属性
-                    setFieldValue(rowData, field, cell);
-
-                    CellType cellType = cell.getCellType();
-                    Object cellValue = null;
-
-                    if (cellType == CellType._NONE) {
-
-                    } else if (cellType == CellType.NUMERIC) {
-                        // 数值型
-                        if (DateUtil.isCellDateFormatted(cell)) {
-                            // 日期类型
-                            Date d = cell.getDateCellValue();
-                            cellValue = dateTimeFormatter.format(LocalDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault()));
-                        } else {
-                            double numericCellValue = cell.getNumericCellValue();
-                            BigDecimal bdVal = new BigDecimal(numericCellValue);
-                            if ((bdVal + ".0").equals(Double.toString(numericCellValue))) {
-                                // 整型
-                                cellValue = bdVal;
-                            } else if (String.valueOf(numericCellValue).contains("E10")) {
-                                // 科学记数法
-                                cellValue = new BigDecimal(numericCellValue).toPlainString();
-                            } else {
-                                // 浮点型
-                                cellValue = numericCellValue;
-                            }
-                        }
-                    } else if (cellType == CellType.STRING) {
-                        // 字符串型
-                        cellValue = cell.getStringCellValue();
-                    } else if (cellType == CellType.FORMULA) {
-                        // 公式型
-                    } else if (cellType == CellType.BLANK) {
-                        // 空值
-                    } else if (cellType == CellType.BOOLEAN) {
-                        // 布尔型
-                        cellValue = cell.getBooleanCellValue();
-                    } else if (cellType == CellType.ERROR) {
-                        // 错误
-                        cellValue = cell.getErrorCellValue();
-                    }
-
-                    log.info("cellType={}, cellValue={}", cellType.name(), cellValue);
-
-                    // 这里需要做字段类型处理
-                    field.set(rowData, cellValue);
+                    setFieldValue(rowData, field, value);
                 }
 
             }
@@ -136,17 +91,64 @@ public class ExcelUtils {
         log.info("上传数据={}", list.toString());
     }
 
-    private static <T> void setFieldValue(T rowData, Field field, Cell cell) {
+    private static <T> void setFieldValue(T rowData, Field field, Object value) throws IllegalAccessException {
         
         if (field.getType() == int.class || field.getType() == Integer.class) {
-            
+            field.set(rowData, value);
         } else if (field.getType() == long.class || field.getType() == Long.class) {
-            
+            field.set(rowData, value);
         } else if (field.getType() == double.class || field.getType() == Double.class) {
-
+            field.set(rowData, value);
         } else if (field.getType() == String.class) {
-
+            field.set(rowData, String.valueOf(value));
+        } else if (field.getType() == LocalDateTime.class) {
+            field.set(rowData, LocalDateTime.parse(String.valueOf(value), dateTimeFormatter));
         }
+    }
+    
+    private static Object getCellValue(Cell cell) {
+        CellType cellType = cell.getCellType();
+        Object cellValue = null;
+
+        if (cellType == CellType._NONE) {
+
+        } else if (cellType == CellType.NUMERIC) {
+            // 数值型
+            if (DateUtil.isCellDateFormatted(cell)) {
+                // 日期类型
+                Date d = cell.getDateCellValue();
+                cellValue = dateTimeFormatter.format(LocalDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault()));
+            } else {
+                double numericCellValue = cell.getNumericCellValue();
+                BigDecimal bdVal = new BigDecimal(numericCellValue);
+                if ((bdVal + ".0").equals(Double.toString(numericCellValue))) {
+                    // 整型
+                    cellValue = bdVal;
+                } else if (String.valueOf(numericCellValue).contains("E10")) {
+                    // 科学记数法
+                    cellValue = new BigDecimal(numericCellValue).toPlainString();
+                } else {
+                    // 浮点型
+                    cellValue = numericCellValue;
+                }
+            }
+        } else if (cellType == CellType.STRING) {
+            // 字符串型
+            cellValue = cell.getStringCellValue();
+        } else if (cellType == CellType.FORMULA) {
+            // 公式型
+        } else if (cellType == CellType.BLANK) {
+            // 空值
+        } else if (cellType == CellType.BOOLEAN) {
+            // 布尔型
+            cellValue = cell.getBooleanCellValue();
+        } else if (cellType == CellType.ERROR) {
+            // 错误
+            cellValue = cell.getErrorCellValue();
+        }
+
+        log.info("cellType={}, cellValue={}", cellType.name(), cellValue);
+        return cellValue;
     }
 
 

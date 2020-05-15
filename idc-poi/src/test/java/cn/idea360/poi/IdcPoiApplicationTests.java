@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -25,8 +26,8 @@ class IdcPoiApplicationTests {
     @Test
     void contextLoads() throws NoSuchFieldException, IllegalAccessException, IOException {
         // 创建模拟数据
-        User user1 = new User("admin", "123456");
-        User user2 = new User("test", "123456");
+        User user1 = new User("admin", "123456", LocalDateTime.now());
+        User user2 = new User("test", "123456", LocalDateTime.now());
         List<User> users = Arrays.asList(user1, user2);
 
         // 文件路径
