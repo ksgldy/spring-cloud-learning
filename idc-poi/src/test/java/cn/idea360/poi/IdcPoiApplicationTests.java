@@ -20,7 +20,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
-//@SpringBootTest
 class IdcPoiApplicationTests {
 
     @Test
@@ -30,15 +29,26 @@ class IdcPoiApplicationTests {
         User user2 = new User("test", "123456");
         List<User> users = Arrays.asList(user1, user2);
 
+        // 文件路径
         String basePath =  "E:\\example\\spring-cloud-learning\\idc-poi\\oss\\";
         String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()).toString() +".xls";
 
+        // 将Excel写入文件
         HSSFWorkbook workbook = exportExcel(users, User.class);
         workbook.setSheetName(0,"sheetName");//设置sheet的Name
         workbook.write(new File(basePath + File.separator + fileName));
     }
 
-    public <T> HSSFWorkbook exportExcel(List<T> data, Class<T> clz) throws NoSuchFieldException, IllegalAccessException, IOException {
+    /**
+     *
+     * @param data 需要导出的数据
+     * @param clz 数据对应的实体类
+     * @param <T> 泛型
+     * @return Excel文件
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
+    public <T> HSSFWorkbook exportExcel(List<T> data, Class<T> clz) throws NoSuchFieldException, IllegalAccessException {
 
         Field[] fields = clz.getDeclaredFields();
         List<String> headers = new LinkedList<>();
