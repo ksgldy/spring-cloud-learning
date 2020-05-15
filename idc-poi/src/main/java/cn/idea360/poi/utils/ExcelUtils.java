@@ -119,6 +119,7 @@ public class ExcelUtils {
 
                     log.info("cellType={}, cellValue={}", cellType.name(), cellValue);
 
+                    // 这里需要做字段类型处理
                     field.set(rowData, cellValue);
                 }
 
