@@ -28,7 +28,7 @@ public class HttpUtils {
             HttpGet httpget = new HttpGet(url);
             HttpResponse response = httpclient.execute(httpget);
             HttpEntity entity = response.getEntity();
-            result = EntityUtils.toString(response.getEntity());
+            result = EntityUtils.toString(response.getEntity(), "utf-8");
 
         } catch (Exception e) {
             e.printStackTrace();
