@@ -15,6 +15,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static javax.swing.UIManager.getInt;
+
 @Slf4j
 public class ExcelUtils {
 
@@ -71,12 +73,17 @@ public class ExcelUtils {
                 field.setAccessible(true);
 
                 if (field.isAnnotationPresent(ExcelHeader.class)) {
+
                     ExcelHeader annotation = field.getAnnotation(ExcelHeader.class);
+                    int columnIndex = annotation.columnIndex();
 
                     Cell cell = row.getCell(j);
                     if (cell == null) {
                         continue;
                     }
+                    // 设置属性
+                    setFieldValue(rowData, field, cell);
+
                     CellType cellType = cell.getCellType();
                     Object cellValue = null;
 
@@ -128,4 +135,19 @@ public class ExcelUtils {
         }
         log.info("上传数据={}", list.toString());
     }
+
+    private static <T> void setFieldValue(T rowData, Field field, Cell cell) {
+        
+        if (field.getType() == int.class || field.getType() == Integer.class) {
+            
+        } else if (field.getType() == long.class || field.getType() == Long.class) {
+            
+        } else if (field.getType() == double.class || field.getType() == Double.class) {
+
+        } else if (field.getType() == String.class) {
+
+        }
+    }
+
+
 }
