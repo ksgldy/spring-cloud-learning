@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.7.RELEASE</version>
+        <version>2.3.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cn.idea360</groupId>
-    <artifactId>idc-poi</artifactId>
+    <groupId>com.example</groupId>
+    <artifactId>task-demo</artifactId>
     <version>0.0.1</version>
-    <name>idc-poi</name>
+    <name>task-demo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -46,12 +46,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>4.1.2</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -59,9 +53,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
             </plugin>
         </plugins>
     </build>
