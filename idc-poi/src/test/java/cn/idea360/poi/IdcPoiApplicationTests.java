@@ -66,10 +66,11 @@ class IdcPoiApplicationTests {
         for (int h = 0; h < fields.length; h++) {
             Field field = fields[h];
             // 表头
-            ExcelHeader annotation = field.getAnnotation(ExcelHeader.class);
-            headers.add(annotation.value());
-            rowHeader.createCell(h).setCellValue(annotation.value());
-
+            if (field.isAnnotationPresent(ExcelHeader.class)) {
+                ExcelHeader annotation = field.getAnnotation(ExcelHeader.class);
+                headers.add(annotation.value());
+                rowHeader.createCell(h).setCellValue(annotation.value());
+            }
             // 字段
             variables.add(field.getName());
         }

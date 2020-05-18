@@ -20,6 +20,17 @@ public class ExcelUtils {
 
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    /**
+     *
+     * @param multipartFile
+     * @param clz VO对象，对应Excel表头
+     * @param <T>
+     * @throws IOException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     */
     public static <T> void importExcel(MultipartFile multipartFile, Class<T> clz) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         if(null == multipartFile) {
             throw new NullPointerException("请选择文件");
@@ -43,19 +54,30 @@ public class ExcelUtils {
 
         // 读取第一个sheet
         Sheet sheet = wb.getSheetAt(0);
-        //获取最大行数(或者sheet.getLastRowNum())
+        // 获取最大行数(或者sheet.getLastRowNum())
         int rownum = sheet.getPhysicalNumberOfRows();
-        //获取第一行(表头)
-        Row row = sheet.getRow(0);
-        //获取最大列数
-        int colnum = row.getPhysicalNumberOfCells();
         // 反射获取字段
         Field[] fields = clz.getDeclaredFields();
+        // 获取第一行(表头)
+        Row row = sheet.getRow(0);
+        // 获取最大列数
+        int column = row.getPhysicalNumberOfCells();
+
+        // 表头校验
+        for (int j = 0; j < fields.length; j++){
+            Field field = fields[j];
+            if (field.isAnnotationPresent(ExcelHeader.class)) {
+                ExcelHeader annotation = field.getAnnotation(ExcelHeader.class);
+                Cell cell = row.getCell(j);
+                if (cell == null || !getCellValue(cell).equals(annotation.value())) {
+                    throw new RuntimeException("Excel格式错误");
+                }
+            }
+        }
 
         // 处理行数据
         for (int i = 1; i<rownum; i++) {
 
-            Map<String,String> map = new LinkedHashMap<String,String>();
             row = sheet.getRow(i);
             // 遇到空行则结束
             if (row == null) {
@@ -68,11 +90,14 @@ public class ExcelUtils {
             for (int j = 0; j < fields.length; j++){
 
                 Field field = fields[j];
+                // 设置属性可访问
                 field.setAccessible(true);
 
                 if (field.isAnnotationPresent(ExcelHeader.class)) {
 
                     ExcelHeader annotation = field.getAnnotation(ExcelHeader.class);
+
+                    // 这里默认按列顺序，也可以根据columnIndex设置列顺序
                     int columnIndex = annotation.columnIndex();
 
                     Cell cell = row.getCell(j);

@@ -14,11 +14,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class User {
 
-    @ExcelHeader(value = "账号")
+    @ExcelHeader(value = "账号", columnIndex = 0)
     private String username;
-    @ExcelHeader(value = "密码")
+
+    @ExcelHeader(value = "密码", columnIndex = 1)
     private String password;
-    @ExcelHeader(value = "生日")
+
+    @ExcelHeader(value = "生日", columnIndex = 2)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime birthday;
