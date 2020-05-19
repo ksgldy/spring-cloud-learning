@@ -1,4 +1,4 @@
-package cn.idea360;
+package cn.idea360.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

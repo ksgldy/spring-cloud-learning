@@ -1,5 +1,6 @@
-package cn.idea360.generator;
+package cn.idea360.demo.generator;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -32,7 +33,7 @@ public class MysqlGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setOutputDir(projectPath + "/idc-mp/src/main/java");
         gc.setAuthor("当我遇上你");
         gc.setOpen(false);
         gc.setFileOverride(true);// 是否覆盖文件
@@ -40,6 +41,12 @@ public class MysqlGenerator {
         gc.setBaseColumnList(true);// XML columList
         gc.setDateType(DateType.ONLY_DATE);
         gc.setSwagger2(true); // 实体属性 Swagger2 注解
+        gc.setIdType(IdType.AUTO);
+        gc.setMapperName("%sMapper");
+        gc.setXmlName("%sMapper");
+        gc.setServiceName("%sService");
+        gc.setServiceImplName("%sServiceImpl");
+        gc.setControllerName("%sController");
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -54,7 +61,7 @@ public class MysqlGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName("mp");
-        pc.setParent("cn.idea360.mp.modules");
+        pc.setParent("cn.idea360.demo.modules");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
