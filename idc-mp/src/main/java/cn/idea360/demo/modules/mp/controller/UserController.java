@@ -2,8 +2,7 @@ package cn.idea360.demo.modules.mp.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Controller;
  * @author 当我遇上你
  * @since 2020-05-19
  */
-@Controller
+@RestController
 @RequestMapping("/mp/user")
 public class UserController {
 
