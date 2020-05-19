@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
 
@@ -15,11 +16,15 @@ class IdcMpApplicationTests {
 
     @Autowired
     UserService userService;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
         List<User> list = userService.list();
-        log.info(list.toString());
+        redisTemplate.opsForValue().set("test","777");
+        Object test = redisTemplate.opsForValue().get("test");
+        log.info("list={}, redis={}", list.toString(), test.toString());
     }
 
 }
