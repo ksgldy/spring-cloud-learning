@@ -9,6 +9,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.io.Serializable;
 
+/**
+ * @author 当我遇上你
+ * @公众号 当我遇上你
+ * @since 2020-05-21
+ */
 @Configuration
 public class RedisConfig {
 
@@ -20,29 +25,4 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(connectionFactory);
         return redisTemplate;
     }
-
-//    @Bean
-//    public HashOperations<String, String, Object> hashOperations(RedisTemplate<String, Serializable> redisTemplate) {
-//        return redisTemplate.opsForHash();
-//    }
-//
-//    @Bean
-//    public ValueOperations<String, Serializable> valueOperations(RedisTemplate<String, Serializable> redisTemplate) {
-//        return redisTemplate.opsForValue();
-//    }
-//
-//    @Bean
-//    public ListOperations<String, Serializable> listOperations(RedisTemplate<String, Serializable> redisTemplate) {
-//        return redisTemplate.opsForList();
-//    }
-//
-//    @Bean
-//    public SetOperations<String, Serializable> setOperations(RedisTemplate<String, Serializable> redisTemplate) {
-//        return redisTemplate.opsForSet();
-//    }
-//
-//    @Bean
-//    public ZSetOperations<String, Serializable> zSetOperations(RedisTemplate<String, Serializable> redisTemplate) {
-//        return redisTemplate.opsForZSet();
-//    }
 }
