@@ -114,7 +114,7 @@ public class Task implements Callable {
 
 
     public static void main(String[] args) throws Exception{
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        ExecutorService executorService = Executors.newCachedThreadPool();
         Task task = new Task("Task-1");
         Map<Integer, Task> tasks = new HashMap<Integer, Task>();
         tasks.put(1, task);
