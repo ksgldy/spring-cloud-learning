@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 @Slf4j
 @SpringBootTest
@@ -25,6 +26,13 @@ class IdcMpApplicationTests {
         redisTemplate.opsForValue().set("test","777");
         Object test = redisTemplate.opsForValue().get("test");
         log.info("list={}, redis={}", list.toString(), test.toString());
+    }
+
+    @Test
+    public void semaphore() throws Exception{
+        Semaphore semaphore = new Semaphore(3);
+        semaphore.acquire();
+        semaphore.release();
     }
 
 }
