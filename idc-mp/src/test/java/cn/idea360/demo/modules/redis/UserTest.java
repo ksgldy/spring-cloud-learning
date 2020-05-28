@@ -1,5 +1,6 @@
 package cn.idea360.demo.modules.redis;
 
+import cn.idea360.demo.common.utils.BeanUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class UserTest {
@@ -32,9 +34,14 @@ class UserTest {
     public void saveHash(){
 
         User u=new User("admin", "123456");
-        HashMap<Object, Object> objectHashMap = new HashMap<>();
-        objectHashMap.put("username", u.getUsername());
-        objectHashMap.put("password", u.getPassword());
+        Map<String, Object> objectHashMap = new HashMap<>();
+//        objectHashMap.put("username", u.getUsername());
+//        objectHashMap.put("password", u.getPassword());
+        try {
+            objectHashMap = BeanUtils.obj2map(u);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         template.opsForHash().putAll("hash", objectHashMap);
 
         List<Object> myCache = template.opsForHash().values("hash");
