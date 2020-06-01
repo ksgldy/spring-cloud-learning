@@ -1,6 +1,13 @@
 server:
   port: 8888
 spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    mode: LEGACYHTML5
+  mvc:
+    static-path-pattern: /static/**
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
