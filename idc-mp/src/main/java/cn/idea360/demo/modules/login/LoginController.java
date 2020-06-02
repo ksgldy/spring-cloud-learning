@@ -82,6 +82,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(@RequestParam String uuid) throws Exception{
+        redisTemplate.opsForValue().set("uuid:" + uuid, QrCodeEnum.VERIFIED);
         String appId = "wx3f2f5354f615c639";
         String redirectURI = "http://474tya.natappfree.cc/wx/openId";
         String scope = "snsapi_userinfo";
@@ -93,7 +94,6 @@ public class LoginController {
     @GetMapping("/openId")
     public String userInfo(@RequestParam("code") String code, @RequestParam("state") String state) throws Exception {
         log.info("code={}, state={}", code, state);
-        redisTemplate.opsForValue().set("uuid:" + state, QrCodeEnum.SCANNED);
 
         String appId = "wx3f2f5354f615c639";
         String secret = "80ae2299328c6c8f6ae0c774a69b08b0";
@@ -116,8 +116,8 @@ public class LoginController {
     @GetMapping("/userId")
     @ResponseBody
     public String getUserId(@RequestParam("openId") String openId, @RequestParam("uuid") String uuid) {
-        log.info("根据openid={}, 获取userId", openId);
-        redisTemplate.opsForValue().set("uuid:" + uuid, QrCodeEnum.VERIFIED);
+        log.info("根据openid={}, 然后获取userId后调用核心快捷登录", openId);
+        redisTemplate.opsForValue().set("uuid:" + uuid, QrCodeEnum.FINISH);
         return "777";
     }
 
