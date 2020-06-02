@@ -121,4 +121,14 @@ public class LoginController {
         return "777";
     }
 
+    /**
+     * http://localhost/wx/test
+     * @return
+     */
+    @GetMapping("/test")
+    @ResponseBody
+    public R test(){
+        return R.ok(QrCodeEnum.VERIFIED);
+    }
+
 }

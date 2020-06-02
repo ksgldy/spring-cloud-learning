@@ -2,6 +2,7 @@ package cn.idea360.demo.enums;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,8 @@ import java.util.Map;
  * 二维码状态
  */
 @Getter
-public enum QrCodeEnum {
+//@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+public enum QrCodeEnum implements Serializable {
 
     NOT_SCAN(1, "未被扫描"),
     SCANNED(2, "被扫描"),
