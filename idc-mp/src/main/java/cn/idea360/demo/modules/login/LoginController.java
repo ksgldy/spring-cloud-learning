@@ -18,6 +18,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * 1. 基于uuid生成二维码
+ * 2. 手机通过微信扫码后进入授权页面，pc状态变为已扫描
+ * 3. 手机端点击授权后通过oauth2获取微信openid，pc状态变为已授权
+ * 4. pc端根据uuid获取openid(同时后台根据openid查询数据库获取userId和companyId返回到pc端),
+ * 5. 前端根据customerId和companyId调用核心实现快捷登录并返回token
+ * 6. 业务请求头携带token请求
+ */
 @Slf4j
 @Controller
 @RequestMapping("/wx")
@@ -114,11 +122,14 @@ public class LoginController {
     }
 
     @GetMapping("/userId")
-    @ResponseBody
-    public String getUserId(@RequestParam("openId") String openId, @RequestParam("uuid") String uuid) {
+    public ModelAndView getUserId(@RequestParam("openId") String openId, @RequestParam("uuid") String uuid) {
         log.info("根据openid={}, 然后获取userId后调用核心快捷登录", openId);
         redisTemplate.opsForValue().set("uuid:" + uuid, QrCodeEnum.FINISH);
-        return "777";
+
+        String userId = "7777777";
+        ModelAndView modelAndView = new ModelAndView("complete");
+        modelAndView.addObject("userId", userId);
+        return modelAndView;
     }
 
     /**
