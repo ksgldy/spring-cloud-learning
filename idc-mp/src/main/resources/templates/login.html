@@ -2,23 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>登录</title>
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<img th:src="${qrcode}" alt="">
+当前状态: <div class="status" th:text="${status}"></div>
+<img id="qrCode" th:src="${qrcode}" alt="">
 
 </body>
 
 <script th:inline="javascript">
-    // $.ajax({
-    //     url: "/api/createQr",
-    //     type:"GET",
-    //     success:function (data) {
-    //         $("#qrCode").attr("src",data.data);
-    //         img = data.data;
-    //         callbackScan($("#qrCode").attr("src"))
-    //     }
-    // });
+    $.ajax({
+        url: "/wx/createQr",
+        type:"GET",
+        success:function (data) {
+            $("#qrCode").attr("src",data.data);
+            $(".status").html("NOT_SCAN")
+            callbackScan($("#qrCode").attr("src"))
+        }
+    });
+
+    function callbackScan(img) {
+        var tID = setInterval(function() {
+            $.ajax({
+                url : '/wx/query',
+                dataType: "json",
+                type: "POST",
+                data:{"img":img},
+                success: function (data) {
+                    console.log(data.data)
+                    $(".status").html(data.data)
+                    if (data.data == "SCANNED") {
+
+                    } else if (data.data == "VERIFIED") {
+                        clearInterval(tID);
+                        window.location.href = "home";
+                    } else {
+
+                    }
+
+                }
+            })
+        }, 2000)
+    }
 </script>
 </html>

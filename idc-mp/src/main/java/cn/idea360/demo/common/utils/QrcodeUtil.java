@@ -52,7 +52,7 @@ public class QrcodeUtil {
         //注意此处拿到字节数据
         byte[] bytes = imageToBytes(image, "jpg");
         //Base64编码
-        return Base64.getEncoder().encodeToString(bytes);
+        return "data:image/jpg;base64," + Base64.getEncoder().encodeToString(bytes);
     }
 
     private static byte[] imageToBytes(BufferedImage image, String type) {
