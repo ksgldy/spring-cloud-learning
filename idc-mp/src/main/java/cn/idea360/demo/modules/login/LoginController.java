@@ -40,6 +40,15 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping("/verify")
+    public ModelAndView verify(@RequestParam String uuid) {
+        ModelAndView modelAndView = new ModelAndView("verify");
+        log.info("uuid:{}", uuid);
+        redisTemplate.opsForValue().set("uuid:" + uuid, QrCodeEnum.SCANNED);
+        modelAndView.addObject("uuid", uuid);
+        return modelAndView;
+    }
+
     @RequestMapping("/home")
     public ModelAndView homeView() {
         ModelAndView modelAndView = new ModelAndView("home");
@@ -52,7 +61,8 @@ public class LoginController {
         String uuid = UUID.randomUUID().toString();
         log.info("uuid:{}", uuid);
 
-        String returnUrl = "http://474tya.natappfree.cc/wx/login?uuid=" + uuid;
+//        String returnUrl = "http://474tya.natappfree.cc/wx/login?uuid=" + uuid;
+        String returnUrl = "http://474tya.natappfree.cc/wx/verify?uuid=" + uuid;
         String qrCode = QrcodeUtil.getBase64QRCode(returnUrl, 200, 200);
 
         qrCodeMap.put(qrCode, uuid);
@@ -106,7 +116,7 @@ public class LoginController {
     @GetMapping("/userId")
     @ResponseBody
     public String getUserId(@RequestParam("openId") String openId, @RequestParam("uuid") String uuid) {
-        log.info("根据openid={}获取userId", openId);
+        log.info("根据openid={}, 获取userId", openId);
         redisTemplate.opsForValue().set("uuid:" + uuid, QrCodeEnum.VERIFIED);
         return "777";
     }
