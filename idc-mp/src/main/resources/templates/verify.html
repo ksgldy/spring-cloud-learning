@@ -17,15 +17,15 @@
     var uuid = /*[[${uuid}]]*/;
 
     $("#ok").click(function () {
-        console.log("----")
-        $.ajax({
-            url : '/wx/login',
-            type: "GET",
-            data:{"uuid":uuid},
-            success: function (data) {
-                console.log(data.data)
-            }
-        })
+        window.location.href = ctx + "wx/login?uuid=" + uuid
+        // $.ajax({
+        //     url : '/wx/login',
+        //     type: "GET",
+        //     data:{"uuid":uuid},
+        //     success: function (data) {
+        //         console.log(data.data)
+        //     }
+        // })
     });
 
 </script>
