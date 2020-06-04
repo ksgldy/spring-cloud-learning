@@ -23,7 +23,7 @@ import java.util.UUID;
  * 2. 手机通过微信扫码后进入授权页面，pc状态变为已扫描
  * 3. 手机端点击授权后通过oauth2获取微信openid，pc状态变为已授权
  * 4. pc端根据uuid获取openid(同时后台根据openid查询数据库获取userId和companyId返回到pc端),
- * 5. 前端根据customerId和companyId调用核心实现快捷登录并返回token
+ * 5. pc端根据customerId和companyId调用核心实现快捷登录并返回token
  * 6. 业务请求头携带token请求
  */
 @Slf4j
@@ -40,6 +40,7 @@ public class LoginController {
 
     /**
      * http://localhost/wx/loginView
+     * 生成二维码
      * @return
      */
     @RequestMapping("/loginView")
@@ -48,6 +49,11 @@ public class LoginController {
         return modelAndView;
     }
 
+    /**
+     * 授权页面
+     * @param uuid
+     * @return
+     */
     @RequestMapping("/verify")
     public ModelAndView verify(@RequestParam String uuid) {
         ModelAndView modelAndView = new ModelAndView("verify");
@@ -57,12 +63,20 @@ public class LoginController {
         return modelAndView;
     }
 
+    /**
+     * 主页
+     * @return
+     */
     @RequestMapping("/home")
     public ModelAndView homeView() {
         ModelAndView modelAndView = new ModelAndView("home");
         return modelAndView;
     }
 
+    /**
+     * redirect_uri
+     * @return
+     */
     @RequestMapping(value = "/createQr", method = RequestMethod.GET)
     @ResponseBody
     public R createQrCode() {
