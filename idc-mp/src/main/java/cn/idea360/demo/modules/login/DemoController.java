@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,6 +39,9 @@ public class DemoController {
 
         // 接收核心服务返回的参数
         String sessionId = UUID.randomUUID().toString();
+        log.info("sessionId:{}", sessionId);
+
+
         String callbackUri = "http://gs778w.natappfree.cc:7777/demo/recv";
 
         // 请求核心服务
@@ -47,13 +51,29 @@ public class DemoController {
         // 生成二维码
         String qrconnet = restTemplate.getForObject(requestUrl, String.class);
         log.info("qrconnet={}", qrconnet);
-        String qrCode = QrcodeUtil.getBase64QRCode(qrconnet, 200, 200);
+
+        // redis
+        redisTemplate.opsForValue().set(sessionId, qrconnet);
+
+        String returnUrl = "http://gs778w.natappfree.cc:7777/demo/auth?sessionId=" + sessionId;
+        String qrCode = QrcodeUtil.getBase64QRCode(returnUrl, 200, 200);
 
         modelAndView.addObject("qrCode", qrCode);
 
         return modelAndView;
     }
 
+    @GetMapping("/auth")
+    public String auth(@RequestParam String sessionId) {
+        Object o = redisTemplate.opsForValue().get(sessionId);
+        String url = String.valueOf(o);
+        log.info("url:{}", url);
+        return "redirect:" + url;
+    }
+
+    /**
+     * 更新状态
+     */
     @GetMapping("/recv")
     public void recvData() {
 

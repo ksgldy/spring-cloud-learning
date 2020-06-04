@@ -83,8 +83,8 @@ public class LoginController {
         String uuid = UUID.randomUUID().toString();
         log.info("uuid:{}", uuid);
 
-//        String returnUrl = "http://474tya.natappfree.cc/wx/login?uuid=" + uuid;
-        String returnUrl = "http://474tya.natappfree.cc/wx/verify?uuid=" + uuid;
+//        String returnUrl = "http://gs778w.natappfree.cc/wx/login?uuid=" + uuid;
+        String returnUrl = "http://gs778w.natappfree.cc/wx/verify?uuid=" + uuid;
         String qrCode = QrcodeUtil.getBase64QRCode(returnUrl, 200, 200);
 
         qrCodeMap.put(qrCode, uuid);
