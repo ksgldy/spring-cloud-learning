@@ -55,7 +55,7 @@ public class DemoController {
         // redis
         redisTemplate.opsForValue().set(sessionId, qrconnet);
 
-        String returnUrl = "http://gs778w.natappfree.cc:7777/demo/auth?sessionId=" + sessionId;
+        String returnUrl = "http://localhost:7777/demo/auth?sessionId=" + sessionId;
         String qrCode = QrcodeUtil.getBase64QRCode(returnUrl, 200, 200);
 
         modelAndView.addObject("qrCode", qrCode);
