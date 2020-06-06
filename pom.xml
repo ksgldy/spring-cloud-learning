@@ -15,6 +15,7 @@
         <module>idc-wechat</module>
         <module>idc-mp</module>
         <module>idc-poi</module>
+        <module>idc-mongo</module>
     </modules>
 
     <packaging>pom</packaging>
