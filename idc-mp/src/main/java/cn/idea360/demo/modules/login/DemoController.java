@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,6 +28,12 @@ public class DemoController {
     @Autowired
     RestTemplate restTemplate;
 
+    // 业务回调
+    String callbackUri = "http://yfpsh8.natappfree.cc/demo/recv";
+    // 扫码接口
+    String qrLogin = "http://yfpsh8.natappfree.cc/demo/auth?sessionId=";
+
+
     /**
      * 获取sessionId
      *
@@ -42,10 +49,10 @@ public class DemoController {
         log.info("sessionId:{}", sessionId);
 
 
-        String callbackUri = "http://gs778w.natappfree.cc:7777/demo/recv";
-
         // 请求核心服务
-        String requestUrl = String.format("http://gs778w.natappfree.cc/qrconnect/authorize?callbackUri=%s&sessionId=%s", URLEncoder.encode(callbackUri, "UTF-8"), URLEncoder.encode(sessionId, "UTF-8"));
+        String requestUrl = String.format("http://devcrm.easyliao.com/weixin-api/qrconnect/authorize?callbackUri=%s&sessionId=%s", URLEncoder.encode(callbackUri, "UTF-8"), URLEncoder.encode(sessionId, "UTF-8"));
+//        String requestUrl = String.format("http://yfpsh8.natappfree.cc/weixin-api/qrconnect/authorize?callbackUri=%s&sessionId=%s", callbackUri, URLEncoder.encode(sessionId, "UTF-8"));
+//        String requestUrl = String.format("http://yfpsh8.natappfree.cc/weixin-api/qrconnect/authorize?callbackUri=%s&sessionId=%s", URLEncoder.encode(callbackUri, "UTF-8"), URLEncoder.encode(sessionId, "UTF-8"));
         log.info("requestUrl={}", requestUrl);
 
         // 生成二维码
@@ -55,7 +62,7 @@ public class DemoController {
         // redis
         redisTemplate.opsForValue().set(sessionId, qrconnet);
 
-        String returnUrl = "http://localhost:7777/demo/auth?sessionId=" + sessionId;
+        String returnUrl = qrLogin + sessionId;
         String qrCode = QrcodeUtil.getBase64QRCode(returnUrl, 200, 200);
 
         modelAndView.addObject("qrCode", qrCode);
@@ -73,9 +80,11 @@ public class DemoController {
 
     /**
      * 更新状态
+     * http://yfpsh8.natappfree.cc/demo/recv
      */
     @GetMapping("/recv")
+    @ResponseBody
     public void recvData() {
-
+        System.out.println("====");
     }
 }
