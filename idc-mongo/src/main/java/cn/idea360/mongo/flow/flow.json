@@ -1,13 +1,35 @@
 {
-  "resourceId":"25fed314-8119-404c-b686-c3ad3bb6cc61",
+  "resourceId":"d482a51d-4a9b-4434-96f9-be48e5da59b1",
   "bounds":{
   },
-  "id":"076affc4-c625-42fb-a18e-30ba801f2aaf",
+  "id":"c643f430-81c5-402d-a181-68323b7761ae",
   "childShapes":[
     {
       "outgoing":[
         {
-          "resourceId":"ebd78da3-12b3-43e0-9c81-6236ee3c0b0d",
+          "resourceId":"line-start"
+        }],
+      "resourceId":"node-start",
+      "bounds":{
+        "upperLeft":{
+          "x":0.0,
+          "y":0.0
+        },
+        "lowerRight":{
+          "x":100.0,
+          "y":80.0
+        }
+      },
+      "stencil":{
+        "id":"开始节点"
+      },
+      "properties":{
+      }
+    },
+    {
+      "outgoing":[
+        {
+          "resourceId":"line-end",
           "answers":{
             "keywords":[
               "ok",
@@ -16,7 +38,7 @@
           }
         },
         {
-          "resourceId":"11c43f66-08f7-4192-abc9-ea0695fb0314",
+          "resourceId":"line-end",
           "answers":{
             "keywords":[
               "不行",
@@ -24,7 +46,7 @@
             "text":"否定"
           }
         }],
-      "resourceId":"d2cb9310-0965-46f1-b724-af298e331f06",
+      "resourceId":"node-normal",
       "bounds":{
         "upperLeft":{
           "x":0.0,
@@ -41,13 +63,14 @@
       "properties":{
         "basicProperties":{
           "enableBreak":true,
+          "resourceId":"606fab27-ae0b-43cd-9e19-c3ef6f726044",
           "expression":"${executeCount}>3",
           "repeatSence":true,
           "againSence":true,
           "executeCount":0
         },
         "answerProperties":{
-          "modelName":"开始话术",
+          "modelName":"普通话术",
           "recordings":[
           ],
           "playOrder":"随机播放"
@@ -56,6 +79,88 @@
           "intention":{
           }
         }
+      }
+    },
+    {
+      "outgoing":[
+      ],
+      "resourceId":"node-hangup",
+      "bounds":{
+        "upperLeft":{
+          "x":0.0,
+          "y":0.0
+        },
+        "lowerRight":{
+          "x":100.0,
+          "y":80.0
+        }
+      },
+      "stencil":{
+        "id":"挂机模块"
+      },
+      "properties":{
+      }
+    },
+    {
+      "outgoing":[
+        {
+          "resourceId":"node-normal"
+        }],
+      "resourceId":"line-start",
+      "bounds":{
+        "upperLeft":{
+          "x":0.0,
+          "y":0.0
+        },
+        "lowerRight":{
+          "x":100.0,
+          "y":80.0
+        }
+      },
+      "dockers":[
+        {
+          "x":0.0,
+          "y":0.0
+        },
+        {
+          "x":80.0,
+          "y":80.0
+        }],
+      "stencil":{
+        "id":"连线节点"
+      },
+      "properties":{
+      }
+    },
+    {
+      "outgoing":[
+        {
+          "resourceId":"node-hangup"
+        }],
+      "resourceId":"line-end",
+      "bounds":{
+        "upperLeft":{
+          "x":0.0,
+          "y":0.0
+        },
+        "lowerRight":{
+          "x":100.0,
+          "y":80.0
+        }
+      },
+      "dockers":[
+        {
+          "x":0.0,
+          "y":0.0
+        },
+        {
+          "x":0.0,
+          "y":0.0
+        }],
+      "stencil":{
+        "id":"连线节点"
+      },
+      "properties":{
       }
     }]
 }
