@@ -12,10 +12,12 @@ import java.io.Serializable;
  */
 public enum  StencilEnum implements Serializable {
 
+    START("start", "开始节点"),
     NORMAL("normal", "普通模块"),
     ANYANSWER("anyanswer", "任答模块"),
     HANGUP("hangup", "挂机模块"),
     ARTIFICIAL("artificial", "转人工模块"),
+    SEQUENCEFLOW("sequenceflow", "连线节点"),
     ;
 
     private String value;
