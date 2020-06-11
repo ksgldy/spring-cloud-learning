@@ -2,6 +2,7 @@ package cn.idea360.demo.modules.json;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @since 2020-06-10
  */
 @Data
-public class User {
+public class User implements Serializable {
 
     private String userName;
     private List<Role> roles;

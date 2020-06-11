@@ -13,7 +13,7 @@ import java.util.List;
  * @公众号 当我遇上你
  * @since 2020-06-10
  */
-class GsonTestTest {
+class GsonTest {
 
     /**
      * {"userName":"admin","roles":[{"roleName":"系统管理员"},{"roleName":"普通管理员"}]}

@@ -50,8 +50,8 @@ public class DemoController {
 
 
         // 请求核心服务
-//        String requestUrl = String.format("http://devcrm.easyliao.com/weixin-api/qrconnect/authorize?callbackUri=%s&sessionId=%s", URLEncoder.encode(callbackUri, "UTF-8"), URLEncoder.encode(sessionId, "UTF-8"));
-        String requestUrl = String.format("http://78mzt9.natappfree.cc/qrconnect/authorize?callbackUri=%s&sessionId=%s", URLEncoder.encode(callbackUri, "UTF-8"), URLEncoder.encode(sessionId, "UTF-8"));
+//        String requestUrl = String.format("http://qpxjb8.natappfree.cc/qrconnect/authorize?callbackUri=%s&sessionId=%s", URLEncoder.encode(callbackUri, "UTF-8"), URLEncoder.encode(sessionId, "UTF-8"));
+        String requestUrl = String.format("http://devcrm.easyliao.com/weixin-api/qrconnect/authorize?callbackUri=%s&sessionId=%s", URLEncoder.encode(callbackUri, "UTF-8"), URLEncoder.encode(sessionId, "UTF-8"));
         log.info("requestUrl={}", requestUrl);
 
         // 生成二维码
