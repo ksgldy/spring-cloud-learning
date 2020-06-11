@@ -59,7 +59,7 @@ public class ExcelController {
 
         String downloadName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()).toString() +".xls";
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(downloadName, StandardCharsets.UTF_8));
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(downloadName, StandardCharsets.UTF_8.toString()));
         OutputStream outputStream = response.getOutputStream();
         workbook.write(outputStream);
         outputStream.close();

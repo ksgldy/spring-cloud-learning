@@ -22,7 +22,8 @@ class GsonTest {
     void toJson() {
         Role role1 = new Role("系统管理员");
         Role role2 = new Role("普通管理员");
-        User user = new User("admin");
+        User user = new User();
+        user.setUserName("admin");
         user.setRoles(Arrays.asList(role1, role2));
 
         // 对象转json
@@ -37,7 +38,8 @@ class GsonTest {
     void toJson2() {
         Role role1 = new Role("系统管理员");
         Role role2 = new Role("普通管理员");
-        User user = new User("admin");
+        User user = new User();
+        user.setUserName("admin");
         user.setRoles(Arrays.asList(role1, role2));
 
         String json = new GsonBuilder().create().toJson(user);
